@@ -1,5 +1,6 @@
 package com.ablethon.woongsang.gestcapturex;
 
+import android.app.Activity;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -11,6 +12,8 @@ import android.widget.Toast;
 import java.util.ArrayList;
 
 public class PatternViewer extends View {
+
+    Activity mParent;
 
     static final float PI = 3.1415926535f;
     //static final float RATE_TO_DEGREE = 180/PI;
@@ -31,6 +34,7 @@ public class PatternViewer extends View {
     public PatternViewer(Context context){
         super(context);
         this.context = context;
+        mParent=(Activity)context;
         initialize();
     }
 
@@ -202,6 +206,9 @@ public class PatternViewer extends View {
                 if( i < detectedPattern.size()-1 )
                     str = str + " -> ";
             }
+            ProcessGesture pg= new ProcessGesture();
+            pg.processGesture( detectedPattern, mParent, context );
+
             Toast.makeText(this.getContext(), str, Toast.LENGTH_SHORT).show();
             return true;
         }
