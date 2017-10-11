@@ -25,6 +25,7 @@ public class SpeechTestActivity extends Activity implements OnInitListener {
     ArrayList<String> mDatas= new ArrayList<String>();
     ListView listview;
     int nameSelector = -1;
+    int swapeChecker=0;
 
     int scrollMovingDirection;
     private float mInitialX;
@@ -47,25 +48,37 @@ public class SpeechTestActivity extends Activity implements OnInitListener {
         listview= (ListView) findViewById(R.id.ListView);
         listview.setAdapter(adapter);
 
-        listview.setOnLongClickListener(longClickListener);
+        //listview.setOnLongClickListener(longClickListener);
+       // listview.setOnItemLongClickListener(longClickListener);
         listview.setOnTouchListener(scrollChecker);
         listview.setOnScrollListener(scrollListener);
 
 
     }
+    AdapterView.OnItemLongClickListener longClickListener = new AdapterView.OnItemLongClickListener(){
 
-View.OnLongClickListener longClickListener = new View.OnLongClickListener() {
-    @Override
-    public boolean onLongClick(View v) {
-        if(nameSelector<0){
-            nameSelector=0;
+
+        @Override
+        public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+            if(nameSelector<0){
+               nameSelector=0;
+           }
+            myTTS.speak(mDatas.get(getNextIndex(nameSelector))+"에게 전화를 거시겠습니까?", TextToSpeech.QUEUE_FLUSH, null);
+            return false;
         }
-        myTTS.speak(mDatas.get(getNextIndex(nameSelector))+"에게 전화를 거시겠습니까?", TextToSpeech.QUEUE_FLUSH, null);
-
-
-        return true;
-    }
-};
+    };
+//View.OnLongClickListener longClickListener = new View.OnLongClickListener() {
+//    @Override
+//    public boolean onLongClick(View v) {
+//        if(nameSelector<0){
+//            nameSelector=0;
+//        }
+//        myTTS.speak(mDatas.get(getNextIndex(nameSelector))+"에게 전화를 거시겠습니까?", TextToSpeech.QUEUE_FLUSH, null);
+//
+//
+//        return true;
+//    }
+//};
 
     AbsListView.OnScrollListener scrollListener = new AbsListView.OnScrollListener(){
         public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {    }
@@ -99,14 +112,22 @@ View.OnLongClickListener longClickListener = new View.OnLongClickListener() {
                     final float x = event.getX();
                     final float y = event.getY();
                     final float yDiff = y - mInitialY;
-                    if (yDiff > 0.0) {
+                    final float xDiff = x - mInitialX;
+                    if(Math.abs(xDiff)>50){
+                        Log.i("스와이프", "스와이프");
+                        swapeChecker=1;
+                        return false;
+                    }
+                    if (yDiff > 0.0 && Math.abs(yDiff)>50) {
                         scrollMovingDirection=1;
                      //   Log.i("스크롤이동이동", "아래");
+                        swapeChecker=0;
                         break;
 
-                    } else if (yDiff < 0.0) {
+                    } else if (yDiff < 0.0 && Math.abs(yDiff)>50) {
                         scrollMovingDirection=2;
                     //    Log.i("스크롤이동이동", "위");
+                        swapeChecker=0;
                         break;
                     }
                     break;
