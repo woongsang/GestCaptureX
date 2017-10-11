@@ -8,6 +8,7 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.speech.tts.TextToSpeech;
 import android.speech.tts.TextToSpeech.OnInitListener;
+import android.view.DragEvent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemLongClickListener;
@@ -37,14 +38,11 @@ public class SpeechTestActivity extends Activity implements OnInitListener {
         ArrayAdapter adapter= new ArrayAdapter(this, R.layout.bigfont_item, mDatas);
 
         listview= (ListView)findViewById(R.id.listview);
-
         listview.setAdapter(adapter);
 
 
         listview.setOnItemLongClickListener(longClickListener);
         listview.setOnItemClickListener(listener);
-
-
 
         myTTS = new TextToSpeech(this, this);
     }

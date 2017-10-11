@@ -11,6 +11,8 @@ public class CommonLibrary {
     public static ArrayList<Person> PERSON_LIST = new ArrayList<Person>();
 
     public static void initPersonList(){
+        PERSON_LIST.clear();
+
         PERSON_LIST.add(new Person("정웅섭","01096665001"));
         PERSON_LIST.add(new Person("김상헌","01058781501"));
         PERSON_LIST.add(new Person("박지성","123456789"));

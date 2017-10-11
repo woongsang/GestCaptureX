@@ -14,22 +14,11 @@ import java.util.ArrayList;
  */
 
 public class ProcessGesture  extends Activity{
-
-
-
-
     public void processGesture(ArrayList<Vertex> list,Activity activity,Context context){
 
         if(list.size()==2 && list.get(0).getSection()==0 && list.get(1).getSection()==2){
                 Log.i("tttt","ㄱ입니다....");
-
             activity.startActivity(new Intent(context, SpeechTestActivity.class));
-
         }
-
-
     }
-
-
-
 }
