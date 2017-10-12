@@ -19,8 +19,8 @@ public class CommonLibrary {
         PERSON_LIST.add(new Person("이영표","987654321"));
         PERSON_LIST.add(new Person("차두리","000000000"));
         PERSON_LIST.add(new Person("홍명보","111111111"));
-        PERSON_LIST.add(new Person("119","119"));
-        PERSON_LIST.add(new Person("112","112"));
+        PERSON_LIST.add(new Person("긴급통화119","119"));
+        PERSON_LIST.add(new Person("긴급통화112","112"));
     }
 
     public static String getPhoneNumber(String name){
