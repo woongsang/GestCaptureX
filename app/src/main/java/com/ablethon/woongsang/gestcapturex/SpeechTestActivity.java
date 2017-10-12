@@ -100,6 +100,7 @@ public class SpeechTestActivity extends Activity implements OnInitListener {
                         if(callChecker == 1){
                             String name = mDatas.get(nameSelector);
                             myTTS.speak(name+"님에게 전화를 걸겠습니다", TextToSpeech.QUEUE_FLUSH, null);
+                            Toast.makeText(getApplicationContext(), name + "님에게 전화를 걸겠습니다 ", Toast.LENGTH_SHORT).show();
                             try {
                                 Thread.sleep(2000);
                             } catch (InterruptedException e) {
@@ -110,8 +111,6 @@ public class SpeechTestActivity extends Activity implements OnInitListener {
 
                             finish();
                         }
-
-
                         return true;
                     }
                     if (yDiff > 0.0 && Math.abs(yDiff)>50) {
