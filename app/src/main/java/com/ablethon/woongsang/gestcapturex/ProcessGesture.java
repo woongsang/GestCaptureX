@@ -5,6 +5,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
 
+import com.ablethon.woongsang.gestcapturex.Vertex;
+
 import java.util.ArrayList;
 
 
@@ -14,7 +16,10 @@ import java.util.ArrayList;
  */
 
 public class ProcessGesture  extends Activity{
-    public void processGesture(ArrayList<Vertex> list,Activity activity,Context context){
+
+    public void process(ArrayList<Vertex> detectedPattern, Activity activity, Context context){}
+
+    public void processMainGesture(ArrayList<Vertex> list, Activity activity, Context context){
 
         if(list.size() == 2){
             if(list.get(0).getSection() == 0 && list.get(1).getSection() == 2){
@@ -27,4 +32,5 @@ public class ProcessGesture  extends Activity{
             }
         }
     }
+
 }

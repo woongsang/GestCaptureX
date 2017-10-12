@@ -4,8 +4,6 @@ class Vertex {
     private float x;
     private float y;
 
-
-
     private float radian;
     private float length;
     private float section;

@@ -9,6 +9,8 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Toast;
 
+import com.ablethon.woongsang.gestcapturex.Vertex;
+
 import java.util.ArrayList;
 
 public class PatternViewer extends View {
@@ -207,7 +209,7 @@ public class PatternViewer extends View {
                     str = str + " -> ";
             }
             ProcessGesture pg= new ProcessGesture();
-            pg.processGesture( detectedPattern, mParent, context );
+            pg.processMainGesture( detectedPattern, mParent, context );
 
             Toast.makeText(this.getContext(), str, Toast.LENGTH_SHORT).show();
             return true;
