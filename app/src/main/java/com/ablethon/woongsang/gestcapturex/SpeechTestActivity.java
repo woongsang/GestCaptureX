@@ -4,12 +4,16 @@ package com.ablethon.woongsang.gestcapturex;
  * Created by SangHeon on 2017-10-10.
  */
 
+import android.Manifest;
 import android.app.Activity;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.speech.tts.TextToSpeech;
 import android.speech.tts.TextToSpeech.OnInitListener;
+import android.support.annotation.RequiresApi;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
@@ -76,8 +80,19 @@ public class SpeechTestActivity extends Activity implements OnInitListener {
     };
 
     AdapterView.OnTouchListener scrollChecker = new  AdapterView.OnTouchListener() {
+        @RequiresApi(api = Build.VERSION_CODES.M)
         @Override
         public boolean onTouch(View v, MotionEvent event) {
+
+            if (checkSelfPermission(Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
+                requestPermissions (new String[]{Manifest.permission.CALL_PHONE}, 1);
+
+                // MY_PERMISSIONS_REQUEST_READ_CONTACTS is an
+                // app-defined int constant
+
+                return false;
+            }
+
             switch (event.getAction()) {
                 case MotionEvent.ACTION_DOWN:
                     mInitialX = event.getX();
@@ -98,6 +113,7 @@ public class SpeechTestActivity extends Activity implements OnInitListener {
 
                        //한번만 호출하기 위해 callChecker을 설정함.(없으면 스와이프가 지속적으로 인식되어 여러번 호출됨)
                         if(callChecker == 1){
+
                             String name = mDatas.get(nameSelector);
                             myTTS.speak(name+"님에게 전화를 걸겠습니다", TextToSpeech.QUEUE_FLUSH, null);
                             try {
