@@ -1,4 +1,4 @@
-package com.ablethon.woongsang.gestcapturex;
+package com.ablethon.woongsang.gestcapturex.API;
 
 import android.app.Activity;
 import android.content.Context;
@@ -9,7 +9,8 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Toast;
 
-import com.ablethon.woongsang.gestcapturex.Vertex;
+import com.ablethon.woongsang.gestcapturex.ProcessGesture.ProcessGesture;
+import com.ablethon.woongsang.gestcapturex.VO.Vertex;
 
 import java.util.ArrayList;
 

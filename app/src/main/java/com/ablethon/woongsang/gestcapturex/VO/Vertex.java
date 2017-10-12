@@ -1,6 +1,6 @@
-package com.ablethon.woongsang.gestcapturex;
+package com.ablethon.woongsang.gestcapturex.VO;
 
-class Vertex {
+public class Vertex {
     private float x;
     private float y;
 

@@ -1,4 +1,4 @@
-package com.ablethon.woongsang.gestcapturex;
+package com.ablethon.woongsang.gestcapturex.Activity;
 
 import android.Manifest;
 import android.app.Activity;
@@ -13,6 +13,9 @@ import android.support.annotation.RequiresApi;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+
+import com.ablethon.woongsang.gestcapturex.API.DownloadTask;
+import com.ablethon.woongsang.gestcapturex.R;
 
 import static android.location.LocationManager.GPS_PROVIDER;
 

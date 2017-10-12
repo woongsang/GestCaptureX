@@ -1,28 +1,28 @@
-package com.ablethon.woongsang.gestcapturex;
+package com.ablethon.woongsang.gestcapturex.Activity;
 
 /**
  * Created by SangHeon on 2017-10-10.
  */
 
-import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.speech.tts.TextToSpeech;
 import android.speech.tts.TextToSpeech.OnInitListener;
 import android.support.annotation.RequiresApi;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
-import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.Toast;
+
+import com.ablethon.woongsang.gestcapturex.API.CommonLibrary;
+
+import com.ablethon.woongsang.gestcapturex.API.TouchInterface;
+import com.ablethon.woongsang.gestcapturex.ProcessGesture.ProcessCallGesture;
+import com.ablethon.woongsang.gestcapturex.R;
+
 import java.util.ArrayList;
 
 public class CallActivity extends Activity implements OnInitListener{
@@ -31,12 +31,10 @@ public class CallActivity extends Activity implements OnInitListener{
 
     public static ArrayList<String> mDatas= new ArrayList<String>();
     ListView listview;
-    static int nameSelector = -1;
+    public static int nameSelector = -1;
     Context context=this;
     int callChecker = 0;
-    int scrollMovingDirection;
-    private float mInitialX;
-    private float mInitialY;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -57,10 +55,8 @@ public class CallActivity extends Activity implements OnInitListener{
         listview.setAdapter(adapter);
 
         listview.setOnTouchListener(scrollChecker);
-     //   listview.setOnScrollListener(scrollListener);
+
     }
-
-
 
     AdapterView.OnTouchListener scrollChecker = new  AdapterView.OnTouchListener() {
         @RequiresApi(api = Build.VERSION_CODES.M)

@@ -1,11 +1,13 @@
-package com.ablethon.woongsang.gestcapturex;
+package com.ablethon.woongsang.gestcapturex.ProcessGesture;
 
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
 
-import com.ablethon.woongsang.gestcapturex.Vertex;
+import com.ablethon.woongsang.gestcapturex.Activity.CallActivity;
+import com.ablethon.woongsang.gestcapturex.VO.Vertex;
+import com.ablethon.woongsang.gestcapturex.Activity.WeatherActivity;
 
 import java.util.ArrayList;
 

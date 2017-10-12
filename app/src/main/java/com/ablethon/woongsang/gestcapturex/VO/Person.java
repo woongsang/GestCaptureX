@@ -1,4 +1,4 @@
-package com.ablethon.woongsang.gestcapturex;
+package com.ablethon.woongsang.gestcapturex.VO;
 
 /**
  * Created by SangHeon on 2017-10-10.

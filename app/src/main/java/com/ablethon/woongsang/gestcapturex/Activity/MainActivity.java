@@ -1,7 +1,9 @@
-package com.ablethon.woongsang.gestcapturex;
+package com.ablethon.woongsang.gestcapturex.Activity;
 
 import android.app.Activity;
 import android.os.Bundle;
+
+import com.ablethon.woongsang.gestcapturex.API.PatternViewer;
 
 public class MainActivity extends Activity {
     PatternViewer patternViewer;
