@@ -25,7 +25,6 @@ public class SpeechTestActivity extends Activity implements OnInitListener {
     ArrayList<String> mDatas= new ArrayList<String>();
     ListView listview;
     int nameSelector = -1;
-    int swapeChecker=0;
 
     int scrollMovingDirection;
     private float mInitialX;
@@ -48,37 +47,9 @@ public class SpeechTestActivity extends Activity implements OnInitListener {
         listview= (ListView) findViewById(R.id.ListView);
         listview.setAdapter(adapter);
 
-        //listview.setOnLongClickListener(longClickListener);
-       // listview.setOnItemLongClickListener(longClickListener);
         listview.setOnTouchListener(scrollChecker);
         listview.setOnScrollListener(scrollListener);
-
-
     }
-    AdapterView.OnItemLongClickListener longClickListener = new AdapterView.OnItemLongClickListener(){
-
-
-        @Override
-        public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-            if(nameSelector<0){
-               nameSelector=0;
-           }
-            myTTS.speak(mDatas.get(getNextIndex(nameSelector))+"에게 전화를 거시겠습니까?", TextToSpeech.QUEUE_FLUSH, null);
-            return false;
-        }
-    };
-//View.OnLongClickListener longClickListener = new View.OnLongClickListener() {
-//    @Override
-//    public boolean onLongClick(View v) {
-//        if(nameSelector<0){
-//            nameSelector=0;
-//        }
-//        myTTS.speak(mDatas.get(getNextIndex(nameSelector))+"에게 전화를 거시겠습니까?", TextToSpeech.QUEUE_FLUSH, null);
-//
-//
-//        return true;
-//    }
-//};
 
     AbsListView.OnScrollListener scrollListener = new AbsListView.OnScrollListener(){
         public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {    }
@@ -115,19 +86,20 @@ public class SpeechTestActivity extends Activity implements OnInitListener {
                     final float xDiff = x - mInitialX;
                     if(Math.abs(xDiff)>50){
                         Log.i("스와이프", "스와이프");
-                        swapeChecker=1;
-                        return false;
+
+                        if(nameSelector<0){
+                            nameSelector=0;
+                        }
+                        myTTS.speak(mDatas.get(nameSelector)+"에게 전화를 거시겠습니까?", TextToSpeech.QUEUE_FLUSH, null);
+                        return true;
                     }
                     if (yDiff > 0.0 && Math.abs(yDiff)>50) {
                         scrollMovingDirection=1;
                      //   Log.i("스크롤이동이동", "아래");
-                        swapeChecker=0;
                         break;
-
                     } else if (yDiff < 0.0 && Math.abs(yDiff)>50) {
                         scrollMovingDirection=2;
                     //    Log.i("스크롤이동이동", "위");
-                        swapeChecker=0;
                         break;
                     }
                     break;
@@ -136,41 +108,6 @@ public class SpeechTestActivity extends Activity implements OnInitListener {
         }
     };
 
-
-    AdapterView.OnTouchListener lis = new  AdapterView.OnTouchListener(){
-        @Override
-        public boolean onTouch(View v, MotionEvent event) {
-
-            switch (event.getAction()) {
-                case MotionEvent.ACTION_DOWN:
-              //      String name = mDatas.get(getNextIndex(NameSelector));
-               //     Toast.makeText(getApplicationContext(), name + "ACTION_DOWN ", Toast.LENGTH_SHORT).show();
-                    Log.i("ACTION_DOWNddd", "ACTION_DOWNddd");
-
-                case MotionEvent.ACTION_SCROLL:
-                    //    Toast.makeText(getApplicationContext(), "ACTION_SCROLL ", Toast.LENGTH_SHORT).show();
-                    Log.i("ACTION_SCROLLfff", "ACTION_SCROLLfff");
-
-
-                case MotionEvent.ACTION_HOVER_MOVE:
-               //     Toast.makeText(getApplicationContext(), "ACTION_HOVER_MOVE ", Toast.LENGTH_SHORT).show();
-                    Log.i("ACTION_HOVER_MOVE","ACTION_HOVER_MOVE");
-
-                case MotionEvent.ACTION_MOVE:
-                //    Toast.makeText(getApplicationContext(), "ACTION_MOVE ", Toast.LENGTH_SHORT).show();
-                    Log.i("ACTION_MOVE","ACTION_MOVE");
-
-                case MotionEvent.ACTION_POINTER_DOWN:
-            //        Toast.makeText(getApplicationContext(), "ACTION_POINTER_DOWN ", Toast.LENGTH_SHORT).show();
-                    Log.i("ACTION_POINTER_DOWN","ACTION_POINTER_DOWN");
-
-            }
-
-
-          //  myTTS.speak("짧게누름"+name, TextToSpeech.QUEUE_FLUSH, null);
-            return true;
-        }
-    };
 
     /*
     *  다음 인덱스를 구하는 메소드
@@ -196,18 +133,6 @@ public class SpeechTestActivity extends Activity implements OnInitListener {
         }
         return nameSelector;
     }
-
-
-
-
-    AdapterView.OnItemClickListener listener= new AdapterView.OnItemClickListener() {
-        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-            String name = mDatas.get(position);
-            String phone =  CommonLibrary.getPhoneNumber(name);
-            myTTS.speak("짧게누름"+name+phone, TextToSpeech.QUEUE_FLUSH, null);
-
-        }
-    };
 
     public void onInit(int status) {
         String myText1 = "안녕하세요구르트";
