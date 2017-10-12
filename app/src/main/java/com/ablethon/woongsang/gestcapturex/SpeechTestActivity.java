@@ -103,7 +103,7 @@ public class SpeechTestActivity extends Activity implements OnInitListener {
                     final float y = event.getY();
                     final float yDiff = y - mInitialY;
                     final float xDiff = x - mInitialX;
-                    if(Math.abs(xDiff)>50){
+                    if(Math.abs(xDiff)>200){
                         Log.i("스와이프", "스와이프");
 
                         if(nameSelector<0){
