@@ -26,7 +26,8 @@
 
 
         <!-- CallActivity -->
-        <activity android:name=".Activity.CallActivity"/>
+        <activity android:name=".Activity.CallActivity"
+            />
     </application>
 
 </manifest>

@@ -4,8 +4,10 @@ package com.ablethon.woongsang.gestcapturex.Activity;
  * Created by SangHeon on 2017-10-10.
  */
 
+import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
+import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.speech.tts.TextToSpeech;
@@ -59,13 +61,22 @@ public class CallActivity extends Activity implements OnInitListener{
     }
 
     AdapterView.OnTouchListener scrollChecker = new  AdapterView.OnTouchListener() {
-        @RequiresApi(api = Build.VERSION_CODES.M)
+
 
         ProcessCallGesture pg= new ProcessCallGesture();                               //to prcessing gesture
         TouchInterface TI = new TouchInterface((Activity) context,context,pg);       //to prcessing gesture
 
+        @RequiresApi(api = Build.VERSION_CODES.M)
         @Override
         public boolean onTouch(View v, MotionEvent event) {
+            if (checkSelfPermission(Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
+                requestPermissions (new String[]{Manifest.permission.CALL_PHONE}, 1);
+
+                // MY_PERMISSIONS_REQUEST_READ_CONTACTS is an
+                // app-defined int constant
+
+                return false;
+            }
 
             if(TI.gestureInterface(event)){    //to prcessing gesture
                 return true;                //to prcessing gesture
