@@ -1,6 +1,8 @@
 package com.ablethon.woongsang.gestcapturex.API;
 
 import com.ablethon.woongsang.gestcapturex.Activity.CallActivity;
+import com.ablethon.woongsang.gestcapturex.Activity.NewsActivity;
+import com.ablethon.woongsang.gestcapturex.VO.Article;
 import com.ablethon.woongsang.gestcapturex.VO.Person;
 
 import java.util.ArrayList;
@@ -11,6 +13,21 @@ import java.util.ArrayList;
 
 public class CommonLibrary {
     public static ArrayList<Person> PERSON_LIST = new ArrayList<Person>();
+    public static ArrayList<Article> ARTICLE_LIST = new ArrayList<Article>();
+
+    public static void initArticleList(){
+        ARTICLE_LIST.clear();
+        NewsActivity.mDatas.clear();
+
+        ARTICLE_LIST.add(new Article("test","test"));
+        ARTICLE_LIST.add(new Article("test","test"));
+        ARTICLE_LIST.add(new Article("test","test"));
+        ARTICLE_LIST.add(new Article("test","test"));
+        ARTICLE_LIST.add(new Article("test","test"));
+
+
+    }
+
 
     public static void initPersonList(){
         PERSON_LIST.clear();
