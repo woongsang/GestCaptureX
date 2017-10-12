@@ -19,7 +19,7 @@ public class ProcessGesture  extends Activity{
         if(list.size() == 2){
             if(list.get(0).getSection() == 0 && list.get(1).getSection() == 2){
                 Log.i("tttt","ㄱ입니다....");
-                activity.startActivity(new Intent(context, SpeechTestActivity.class));
+                activity.startActivity(new Intent(context, CallActivity.class));
             }
             else if (list.get(0).getSection() == 2 && list.get(1).getSection() == 0){
                 Log.i("tttt", "ㄴ입니다....");

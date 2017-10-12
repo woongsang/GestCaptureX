@@ -24,7 +24,7 @@ import android.widget.ListView;
 import android.widget.Toast;
 import java.util.ArrayList;
 
-public class SpeechTestActivity extends Activity implements OnInitListener {
+public class CallActivity extends Activity implements OnInitListener {
 
     private TextToSpeech myTTS;
 
@@ -39,7 +39,7 @@ public class SpeechTestActivity extends Activity implements OnInitListener {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_speech_test);
+        setContentView(R.layout.activity_call);
 
         CommonLibrary.initPersonList();
         nameSelector = -1;
