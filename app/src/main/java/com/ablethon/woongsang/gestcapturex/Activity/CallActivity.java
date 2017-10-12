@@ -53,7 +53,7 @@ public class CallActivity extends Activity implements OnInitListener{
 
         ArrayAdapter adapter= new ArrayAdapter(this, R.layout.bigfont_item, mDatas);
 
-        listview= (ListView) findViewById(R.id.ListView);
+        listview= (ListView) findViewById(R.id.CallListView);
         listview.setAdapter(adapter);
 
         listview.setOnTouchListener(scrollChecker);
@@ -113,8 +113,8 @@ public class CallActivity extends Activity implements OnInitListener{
     }
 
     public void onInit(int status) {
-        String myText1 = "안녕하세요구르트";
-        String myText2 = "반갑다람쥐.";
+        String myText1 = "위 아래로 드래그하여 전화할 사람을 선택해주세요";
+        String myText2 = "선택 후 전화하려면 좌에서 우로 드래그 해주세요";
        myTTS.speak(myText1, TextToSpeech.QUEUE_FLUSH, null);
        myTTS.speak(myText2, TextToSpeech.QUEUE_ADD, null);
     }
@@ -122,6 +122,6 @@ public class CallActivity extends Activity implements OnInitListener{
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        myTTS.shutdown();
+
     }
 }
