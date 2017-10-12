@@ -16,13 +16,6 @@ import java.net.URL;
 
 public class DownloadTask extends AsyncTask<String, Void, String> {
 
-    private String mainTxt = "";
-    private String descriptionTxt = "";
-    private String weather = "";
-    private String tempratureTxt = "";
-    private String main = "";
-    private String name = "";
-
     @Override
     protected String doInBackground(String... urls) {
 
@@ -72,70 +65,33 @@ public class DownloadTask extends AsyncTask<String, Void, String> {
             JSONObject jsonObject = new JSONObject(result);
 
             JSONObject city = jsonObject.getJSONObject("city");
-            name = city.getString("name");
-            Log.i("name", name);
+            String cityName = city.getString("name");
+            Log.i(cityName, "city.getString(name)---------------------");
 
             JSONArray list = jsonObject.getJSONArray("list");
-            JSONObject listObject = list.getJSONObject(0);
+            for (int i = 0; i < list.length(); i++) {
+                JSONObject listObject = list.getJSONObject(i);
 
+                JSONObject weather = listObject.getJSONArray("weather").getJSONObject(0);
+                String weatherMain = weather.getString("main");
+                String weatherDesc = weather.getString("description");
 
+                JSONObject tempInfo = listObject.getJSONObject("main");
+                String temp = tempInfo.getString("temp");
 
-            for (int i =0; i < 7; i++){
-
-                JSONObject weatherInfo = listObject.getJSONArray("weather").getJSONObject(0);
-                String weatherMain = weatherInfo.getString("main");
-                String weatherDescription = weatherInfo.getString("description");
-
-                JSONObject mainTemp = listObject.getJSONObject("main");
-                String temp = mainTemp.getString("temp");
+                String date = listObject.getString("dt_txt");
 
                 Log.i ("main", weatherMain);
-                Log.i ("description", weatherDescription);
+                Log.i ("description", weatherDesc);
                 Log.i ("temp", temp);
-
-                weather = weatherMain;
-                main = weatherDescription;
-                tempratureTxt = temp;
-
-                if (!weather.equals("")){
-
-                    mainTxt += "Day " +i+ ":  " +weather + "\r\n";
-                    descriptionTxt += main + "\r\n";
-                    tempratureTxt += temp + "\r\n";
-
-                    //Toast.makeText(getBaseContext(), message + " - "
-                    // + message,Toast.LENGTH_SHORT).show();
-
-                }
-
-
+                Log.i ("date", date);
             }
-
-
-
-            //move this inside the while loop if you want to display all week
-
-
-
-            //This displays the weather information in the Activity TextView
-            if (mainTxt != ""){
-
-                /*weatherTxt.setText(mainTxt);
-                descriptionText.setText(descriptionTxt);
-                temperatureText.setText(tempratureTxt);
-                nameText.setText("The Weather in " +name+ " is: ");
-*/
-
-
-            }
-
 
         } catch (JSONException e) {
 
 
             e.printStackTrace();
         }
-
-
     }
+
 }
