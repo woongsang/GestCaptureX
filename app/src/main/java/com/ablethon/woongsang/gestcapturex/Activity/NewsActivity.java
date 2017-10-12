@@ -83,7 +83,7 @@ public class NewsActivity  extends Activity implements TextToSpeech.OnInitListen
     *  다음 인덱스를 구하는 메소드
     *  operator이 2이면 위로이동 1이면 아래로 이동
     * */
-    public static String getNextName(int operator){
+    public static String getNextContent(int operator){
         if(operator==1){
             if(itemSelector < mDatas.size()-1 ) {
                 itemSelector++;
@@ -106,7 +106,7 @@ public class NewsActivity  extends Activity implements TextToSpeech.OnInitListen
 
     public void onInit(int status) {
         String myText1 = "뉴스기사를 선택하려면 위 아래로 드래그해주세요";
-        String myText2 = "반갑다람쥐.";
+        String myText2 = "해당 뉴스를 들으시려면 좌 우로 드래그해주세요.";
         myTTS.speak(myText1, TextToSpeech.QUEUE_FLUSH, null);
         myTTS.speak(myText2, TextToSpeech.QUEUE_ADD, null);
     }

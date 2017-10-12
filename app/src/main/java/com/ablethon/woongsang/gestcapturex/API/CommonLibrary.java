@@ -19,15 +19,23 @@ public class CommonLibrary {
         ARTICLE_LIST.clear();
         NewsActivity.mDatas.clear();
 
-        ARTICLE_LIST.add(new Article("test","test"));
-        ARTICLE_LIST.add(new Article("test","test"));
-        ARTICLE_LIST.add(new Article("test","test"));
-        ARTICLE_LIST.add(new Article("test","test"));
-        ARTICLE_LIST.add(new Article("test","test"));
+        ARTICLE_LIST.add(new Article("a","김"));
+        ARTICLE_LIST.add(new Article("b","상"));
+        ARTICLE_LIST.add(new Article("c","헌"));
+        ARTICLE_LIST.add(new Article("d","짱"));
+        ARTICLE_LIST.add(new Article("e","임"));
 
 
     }
+    public static String getArticleDescription(String title){
 
+        for(int i=0;i< ARTICLE_LIST.size();i++){
+            if(ARTICLE_LIST.get(i).getTitle().equals(title)){
+                return ARTICLE_LIST.get(i).getDescription();
+            }
+        }
+        return "No Content";
+    }
 
     public static void initPersonList(){
         PERSON_LIST.clear();
@@ -38,7 +46,7 @@ public class CommonLibrary {
         PERSON_LIST.add(new Person("박지성","123456789"));
         PERSON_LIST.add(new Person("이영표","987654321"));
         PERSON_LIST.add(new Person("차두리","000000000"));
-        PERSON_LIST.add(new Person("홍명보","111111111"));
+        PERSON_LIST.add(new Person("바우처 택시","0220920000"));
         PERSON_LIST.add(new Person("119","119"));
         PERSON_LIST.add(new Person("112","112"));
     }

@@ -23,7 +23,7 @@ import java.util.ArrayList;
  */
 
 public class ProcessCallGesture extends ProcessGesture {
-    String name = "정웅섭";
+    String name = "";
 
     @RequiresApi(api = Build.VERSION_CODES.M)
     public void process(ArrayList<Vertex> detectedPattern, Activity activity, Context context) {
@@ -40,7 +40,7 @@ public class ProcessCallGesture extends ProcessGesture {
                 Toast.makeText(context, name + " ", Toast.LENGTH_LONG).show();
             } else if (detectedPattern.get(0).getSection() == 0 || detectedPattern.get(0).getSection() == 4) {       //좌->우로 스크롤
                 if (CallActivity.nameSelector < 0) {
-                    CallActivity.nameSelector = 0;
+                    name = CallActivity.getNextName(1);
                 }
 
                 String phone = "tel:" + CommonLibrary.getPhoneNumber(name);
