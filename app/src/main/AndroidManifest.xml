@@ -26,8 +26,10 @@
 
 
         <!-- CallActivity -->
-        <activity android:name=".Activity.CallActivity"
-            />
+        <activity android:name=".Activity.CallActivity"    />
+
+        <!-- NewsActivity -->
+        <activity android:name=".Activity.NewsActivity"     />
     </application>
 
 </manifest>

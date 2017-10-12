@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.util.Log;
 
 import com.ablethon.woongsang.gestcapturex.Activity.CallActivity;
+import com.ablethon.woongsang.gestcapturex.Activity.NewsActivity;
 import com.ablethon.woongsang.gestcapturex.VO.Vertex;
 import com.ablethon.woongsang.gestcapturex.Activity.WeatherActivity;
 
@@ -31,6 +32,10 @@ public class ProcessGesture  extends Activity{
             else if (list.get(0).getSection() == 2 && list.get(1).getSection() == 0){
                 Log.i("tttt", "ㄴ입니다....");
                 activity.startActivity(new Intent(context, WeatherActivity.class));
+            }
+            else if (list.get(0).getSection() == 4 && list.get(1).getSection() == 2 ){
+                Log.i("tttt","ㄱ반대입니다....");
+                activity.startActivity(new Intent(context, NewsActivity.class));
             }
         }
     }

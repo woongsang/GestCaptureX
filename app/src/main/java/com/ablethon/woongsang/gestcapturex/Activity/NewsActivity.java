@@ -17,6 +17,7 @@ import android.widget.ListView;
 import com.ablethon.woongsang.gestcapturex.API.CommonLibrary;
 import com.ablethon.woongsang.gestcapturex.API.TouchInterface;
 import com.ablethon.woongsang.gestcapturex.ProcessGesture.ProcessCallGesture;
+import com.ablethon.woongsang.gestcapturex.ProcessGesture.ProcessNewsGesture;
 import com.ablethon.woongsang.gestcapturex.R;
 
 import java.util.ArrayList;
@@ -38,20 +39,20 @@ public class NewsActivity  extends Activity implements TextToSpeech.OnInitListen
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_call);
+        setContentView(R.layout.activity_news);
 
         CommonLibrary.initArticleList();
         itemSelector = -1;
         myTTS = new TextToSpeech(this, this);
         callChecker=0;
 
-        for(int i=0;i<CommonLibrary.PERSON_LIST.size();i++){
-            mDatas.add( CommonLibrary.PERSON_LIST.get(i).getName() );
+        for(int i=0;i<CommonLibrary.ARTICLE_LIST.size();i++){
+            mDatas.add( CommonLibrary.ARTICLE_LIST.get(i).getTitle() );
         }
 
         ArrayAdapter adapter= new ArrayAdapter(this, R.layout.bigfont_item, mDatas);
 
-        listview= (ListView) findViewById(R.id.CallListView);
+        listview= (ListView) findViewById(R.id.NewsListView);
         listview.setAdapter(adapter);
 
         listview.setOnTouchListener(scrollChecker);
@@ -61,20 +62,13 @@ public class NewsActivity  extends Activity implements TextToSpeech.OnInitListen
     AdapterView.OnTouchListener scrollChecker = new  AdapterView.OnTouchListener() {
 
 
-        ProcessCallGesture pg= new ProcessCallGesture();                               //to prcessing gesture
+        ProcessNewsGesture pg= new ProcessNewsGesture();                               //to prcessing gesture
         TouchInterface TI = new TouchInterface((Activity) context,context,pg);       //to prcessing gesture
 
         @RequiresApi(api = Build.VERSION_CODES.M)
         @Override
         public boolean onTouch(View v, MotionEvent event) {
-            if (checkSelfPermission(Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
-                requestPermissions (new String[]{Manifest.permission.CALL_PHONE}, 1);
 
-                // MY_PERMISSIONS_REQUEST_READ_CONTACTS is an
-                // app-defined int constant
-
-                return false;
-            }
 
             if(TI.gestureInterface(event)){    //to prcessing gesture
                 return true;                //to prcessing gesture
