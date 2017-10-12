@@ -5,6 +5,8 @@ package com.ablethon.woongsang.gestcapturex;
  */
 
 import android.app.Activity;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.speech.tts.TextToSpeech;
 import android.speech.tts.TextToSpeech.OnInitListener;
@@ -26,6 +28,7 @@ public class SpeechTestActivity extends Activity implements OnInitListener {
     ListView listview;
     int nameSelector = -1;
 
+    int callChecker = 0;
     int scrollMovingDirection;
     private float mInitialX;
     private float mInitialY;
@@ -37,6 +40,7 @@ public class SpeechTestActivity extends Activity implements OnInitListener {
         CommonLibrary.initPersonList();
         nameSelector = -1;
         myTTS = new TextToSpeech(this, this);
+        callChecker=0;
 
         for(int i=0;i<CommonLibrary.PERSON_LIST.size();i++){
             mDatas.add( CommonLibrary.PERSON_LIST.get(i).getName() );
@@ -90,7 +94,24 @@ public class SpeechTestActivity extends Activity implements OnInitListener {
                         if(nameSelector<0){
                             nameSelector=0;
                         }
-                        myTTS.speak(mDatas.get(nameSelector)+"에게 전화를 거시겠습니까?", TextToSpeech.QUEUE_FLUSH, null);
+                        callChecker++;
+
+                       //한번만 호출하기 위해 callChecker을 설정함.(없으면 스와이프가 지속적으로 인식되어 여러번 호출됨)
+                        if(callChecker == 1){
+                            String name = mDatas.get(nameSelector);
+                            myTTS.speak(name+"님에게 전화를 걸겠습니다", TextToSpeech.QUEUE_FLUSH, null);
+                            try {
+                                Thread.sleep(2000);
+                            } catch (InterruptedException e) {
+                                e.printStackTrace();
+                            }
+                            String phone = "tel:"+CommonLibrary.getPhoneNumber(name);
+                            startActivity(new Intent("android.intent.action.CALL", Uri.parse(phone)));
+
+                            finish();
+                        }
+
+
                         return true;
                     }
                     if (yDiff > 0.0 && Math.abs(yDiff)>50) {
