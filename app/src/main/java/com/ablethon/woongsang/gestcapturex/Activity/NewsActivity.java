@@ -15,10 +15,13 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import com.ablethon.woongsang.gestcapturex.API.CommonLibrary;
+import com.ablethon.woongsang.gestcapturex.API.DownloadTask;
+import com.ablethon.woongsang.gestcapturex.API.ProcessXMLTask;
 import com.ablethon.woongsang.gestcapturex.API.TouchInterface;
 import com.ablethon.woongsang.gestcapturex.ProcessGesture.ProcessCallGesture;
 import com.ablethon.woongsang.gestcapturex.ProcessGesture.ProcessNewsGesture;
 import com.ablethon.woongsang.gestcapturex.R;
+import com.ablethon.woongsang.gestcapturex.VO.Article;
 
 import java.util.ArrayList;
 
@@ -29,35 +32,34 @@ import java.util.ArrayList;
 public class NewsActivity  extends Activity implements TextToSpeech.OnInitListener {
 
     public static TextToSpeech myTTS;
+    static DownloadTask task = null;
 
     public static ArrayList<String> mDatas= new ArrayList<String>();
-    ListView listview;
+    static ListView listview;
     public static int itemSelector = -1;
     Context context=this;
     int callChecker = 0;
+    ArrayAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_news);
+        listview= (ListView) findViewById(R.id.NewsListView);
+        if(mDatas.size()==0) {
+            CommonLibrary.initArticleList();
 
-        CommonLibrary.initArticleList();
+        }
         itemSelector = -1;
         myTTS = new TextToSpeech(this, this);
         callChecker=0;
-
-        for(int i=0;i<CommonLibrary.ARTICLE_LIST.size();i++){
-            mDatas.add( CommonLibrary.ARTICLE_LIST.get(i).getTitle() );
-        }
-
-        ArrayAdapter adapter= new ArrayAdapter(this, R.layout.bigfont_item, mDatas);
-
-        listview= (ListView) findViewById(R.id.NewsListView);
-        listview.setAdapter(adapter);
-
         listview.setOnTouchListener(scrollChecker);
-
     }
+    public void setListView(){
+        ArrayAdapter adapter= new ArrayAdapter(context, R.layout.bigfont_item, mDatas);
+        listview.setAdapter(adapter);
+    }
+
 
     AdapterView.OnTouchListener scrollChecker = new  AdapterView.OnTouchListener() {
 
@@ -78,7 +80,14 @@ public class NewsActivity  extends Activity implements TextToSpeech.OnInitListen
         }
     };
 
+    public static void setMdatas(){
+        if(CommonLibrary.ARTICLE_LIST.size()==0){
+            for(int i=0;i<CommonLibrary.ARTICLE_LIST.size();i++){
+                NewsActivity.mDatas.add( CommonLibrary.ARTICLE_LIST.get(i).getTitle() );
+            }
 
+        }
+    }
     /*
     *  다음 인덱스를 구하는 메소드
     *  operator이 2이면 위로이동 1이면 아래로 이동
@@ -106,7 +115,7 @@ public class NewsActivity  extends Activity implements TextToSpeech.OnInitListen
 
     public void onInit(int status) {
         String myText1 = "뉴스기사를 선택하려면 위 아래로 드래그해주세요";
-        String myText2 = "해당 뉴스를 들으시려면 좌 우로 드래그해주세요.";
+        String myText2 = "해당 뉴스를 청취하시려면 좌 우로 드래그해주세요.";
         myTTS.speak(myText1, TextToSpeech.QUEUE_FLUSH, null);
         myTTS.speak(myText2, TextToSpeech.QUEUE_ADD, null);
     }
@@ -116,4 +125,5 @@ public class NewsActivity  extends Activity implements TextToSpeech.OnInitListen
         super.onDestroy();
 
     }
+
 }

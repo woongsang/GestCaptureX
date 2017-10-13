@@ -2,6 +2,7 @@ package com.ablethon.woongsang.gestcapturex.API;
 
 import com.ablethon.woongsang.gestcapturex.Activity.CallActivity;
 import com.ablethon.woongsang.gestcapturex.Activity.NewsActivity;
+import com.ablethon.woongsang.gestcapturex.Parser.NewsTop10;
 import com.ablethon.woongsang.gestcapturex.VO.Article;
 import com.ablethon.woongsang.gestcapturex.VO.Person;
 
@@ -15,15 +16,16 @@ public class CommonLibrary {
     public static ArrayList<Person> PERSON_LIST = new ArrayList<Person>();
     public static ArrayList<Article> ARTICLE_LIST = new ArrayList<Article>();
 
-    public static void initArticleList(){
-        ARTICLE_LIST.clear();
-        NewsActivity.mDatas.clear();
 
-        ARTICLE_LIST.add(new Article("a","김"));
-        ARTICLE_LIST.add(new Article("b","상"));
-        ARTICLE_LIST.add(new Article("c","헌"));
-        ARTICLE_LIST.add(new Article("d","짱"));
-        ARTICLE_LIST.add(new Article("e","임"));
+
+    public static void insertArticle(String title,String description){
+        ARTICLE_LIST.add(new Article(title,description));
+    }
+
+    public static void initArticleList(){
+        ProcessXMLTask xmlTask = new ProcessXMLTask();
+        xmlTask.execute("http://myhome.chosun.com/rss/www_section_rss.xml");
+
 
 
     }
