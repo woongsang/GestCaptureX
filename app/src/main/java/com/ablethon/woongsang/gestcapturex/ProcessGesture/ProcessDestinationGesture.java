@@ -14,7 +14,17 @@ import com.ablethon.woongsang.gestcapturex.Activity.DepartureActivity;
 import com.ablethon.woongsang.gestcapturex.Activity.DestinationActivity;
 import com.ablethon.woongsang.gestcapturex.VO.Vertex;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.UnsupportedEncodingException;
+import java.net.HttpURLConnection;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.net.URL;
 import java.util.ArrayList;
+
+import static android.content.ContentValues.TAG;
 
 /**
  * Created by SangHeon on 2017-10-13.
@@ -46,6 +56,53 @@ public class ProcessDestinationGesture  extends ProcessGesture {
 
                 String result="출발지는 "+CommonLibrary.DEPARTURE+"로 도착지는 "+CommonLibrary.DESTINATION+"로 설정되었습니다. 연락을 기다려 주십시오" ;
                 DestinationActivity.myTTS.speak(result, TextToSpeech.QUEUE_FLUSH, null);
+
+
+                new Thread() {
+                    public void run() {
+                        String encDeparture="";
+                        String encDestination="";
+                        try {
+                             encDeparture=java.net.URLEncoder.encode(new String(CommonLibrary.DEPARTURE.getBytes("UTF-8")));
+                             encDestination=java.net.URLEncoder.encode(new String(CommonLibrary.DESTINATION.getBytes("UTF-8")));
+                        } catch (UnsupportedEncodingException e) {
+                            e.printStackTrace();
+                        }
+
+
+                        String tempUrl=CommonLibrary.MY_IP+"/groupware/request?departure="+encDeparture+"&destination="+encDestination+
+                                "&name=김상헌&"+"phone=01058781501";
+  //                      String tempUrl=CommonLibrary.MY_IP+"/groupware/request?departure="+"t"+"&destination="+"b";
+                        URL url;
+                        Log.i("ㅇㅇㅇㅇㅇㅇ",tempUrl+"");
+
+                        HttpURLConnection urlConnection = null;
+                        try {
+                            url = new URL(tempUrl);
+
+                            urlConnection = (HttpURLConnection) url
+                                    .openConnection();
+
+                            InputStream in = urlConnection.getInputStream();
+
+                            InputStreamReader isw = new InputStreamReader(in);
+
+                            int data = isw.read();
+                            while (data != -1) {
+                                char current = (char) data;
+                                data = isw.read();
+                                System.out.print(current);
+                            }
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        } finally {
+                            if (urlConnection != null) {
+                                urlConnection.disconnect();
+                            }
+                        }
+                    }
+                }.start();
+
 
                 try {
                     Thread.sleep(7000);
