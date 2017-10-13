@@ -13,7 +13,6 @@ import android.os.Bundle;
 import android.speech.tts.TextToSpeech;
 import android.speech.tts.TextToSpeech.OnInitListener;
 import android.support.annotation.RequiresApi;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AdapterView;
@@ -27,8 +26,6 @@ import com.ablethon.woongsang.gestcapturex.ProcessGesture.ProcessCallGesture;
 import com.ablethon.woongsang.gestcapturex.R;
 
 import java.util.ArrayList;
-
-import static android.content.ContentValues.TAG;
 
 public class CallActivity extends Activity implements OnInitListener{
 
@@ -118,24 +115,13 @@ public class CallActivity extends Activity implements OnInitListener{
     public void onInit(int status) {
         String myText1 = "위 아래로 드래그하여 전화할 사람을 선택해주세요";
         String myText2 = "선택 후 전화하려면 좌에서 우로 드래그 해주세요";
-       myTTS.speak(myText1, TextToSpeech.QUEUE_FLUSH, null);
-       myTTS.speak(myText2, TextToSpeech.QUEUE_ADD, null);
+        myTTS.speak(myText1, TextToSpeech.QUEUE_FLUSH, null);
+        myTTS.speak(myText2, TextToSpeech.QUEUE_ADD, null);
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-
-    }
-    @Override
-    public void onBackPressed() {
-        if(myTTS != null) {
-
-            myTTS.stop();
-            myTTS.shutdown();
-            Log.d(TAG, "TTS Destroyed");
-        }
-        finish();
 
     }
 }
