@@ -13,6 +13,7 @@ import android.os.Bundle;
 import android.speech.tts.TextToSpeech;
 import android.speech.tts.TextToSpeech.OnInitListener;
 import android.support.annotation.RequiresApi;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AdapterView;
@@ -26,6 +27,8 @@ import com.ablethon.woongsang.gestcapturex.ProcessGesture.ProcessCallGesture;
 import com.ablethon.woongsang.gestcapturex.R;
 
 import java.util.ArrayList;
+
+import static android.content.ContentValues.TAG;
 
 public class CallActivity extends Activity implements OnInitListener{
 
@@ -122,6 +125,16 @@ public class CallActivity extends Activity implements OnInitListener{
     @Override
     protected void onDestroy() {
         super.onDestroy();
+
+    }
+    public void onBackPressed() {
+        if(myTTS != null) {
+
+            myTTS.stop();
+            myTTS.shutdown();
+            Log.d(TAG, "TTS Destroyed");
+        }
+        finish();
 
     }
 }
