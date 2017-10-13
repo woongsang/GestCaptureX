@@ -21,32 +21,32 @@ public class CommonLibrary {
     public static ArrayList<Article> ARTICLE_LIST = new ArrayList<Article>();
     public static String DEPARTURE;
     public static String DESTINATION;
-
+    public static String MY_IP="http://192.168.1.5:8088";
 
     public static void insertArticle(String title,String description){
         ARTICLE_LIST.add(new Article(title,description));
     }
 
     public static void initDepartureList(){
-        DepartureActivity.mDatas.add("서울대입구");
-        DepartureActivity.mDatas.add("낙성대");
-        DepartureActivity.mDatas.add("사당");
-        DepartureActivity.mDatas.add("방배");
-        DepartureActivity.mDatas.add("서초");
-        DepartureActivity.mDatas.add("교대");
-        DepartureActivity.mDatas.add("강남");
+        DepartureActivity.mDatas.add("상도초등학교");
+        DepartureActivity.mDatas.add("송내역");
+        DepartureActivity.mDatas.add("복사골문화센터");
+        DepartureActivity.mDatas.add("하얀마을");
+        DepartureActivity.mDatas.add("현대백화점");
+        DepartureActivity.mDatas.add("부천시청역");
+        DepartureActivity.mDatas.add("부명고등학교");
 
     }
 
 
     public static void initDestinationList(){
-        DestinationActivity.mDatas.add("서울대입구");
-        DestinationActivity.mDatas.add("낙성대");
-        DestinationActivity.mDatas.add("사당");
-        DestinationActivity.mDatas.add("방배");
-        DestinationActivity.mDatas.add("서초");
-        DestinationActivity.mDatas.add("교대");
-        DestinationActivity.mDatas.add("강남");
+        DestinationActivity.mDatas.add("상도초등학교");
+        DestinationActivity.mDatas.add("송내역");
+        DestinationActivity.mDatas.add("복사골문화센터");
+        DestinationActivity.mDatas.add("하얀마을");
+        DestinationActivity.mDatas.add("현대백화점");
+        DestinationActivity.mDatas.add("부천시청역");
+        DestinationActivity.mDatas.add("부명고등학교");
 
     }
     public static String getArticleDescription(String title){
