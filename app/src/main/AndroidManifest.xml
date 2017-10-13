@@ -31,6 +31,13 @@
 
         <!-- NewsActivity -->
         <activity android:name=".Activity.NewsActivity"     />
+
+        <!-- LocationActivity -->
+        <activity android:name=".Activity.DepartureActivity"     />
+
+        <!-- DestinationActivity -->
+        <activity android:name=".Activity.DestinationActivity"     />
+
     </application>
 
 </manifest>

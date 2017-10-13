@@ -46,9 +46,22 @@ public class ProcessDepartureGesture extends ProcessGesture {
 
                 CommonLibrary.DEPARTURE = departure;
                 Log.i("출발지선택",departure+"");
-                activity.startActivity(new Intent(context, DestinationActivity.class));
-                activity.finish();
-                //  activity.finish();
+                String result="출발지는 "+departure+"로 설정되었습니다.";
+                DepartureActivity.myTTS.speak(result, TextToSpeech.QUEUE_FLUSH, null);
+
+                try {
+                    Thread.sleep(3000);
+                    DepartureActivity.myTTS.shutdown();
+                    activity.startActivity(new Intent(context, DestinationActivity.class));
+                    activity.finish();
+
+
+
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+
+
 
 
             }

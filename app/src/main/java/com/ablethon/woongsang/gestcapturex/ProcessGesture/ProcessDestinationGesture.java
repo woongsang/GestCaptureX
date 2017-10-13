@@ -44,10 +44,17 @@ public class ProcessDestinationGesture  extends ProcessGesture {
                 CommonLibrary.DESTINATION = departure;
                 Log.i("목적지선택",departure+"");
 
-                String result="출발지는 "+CommonLibrary.DEPARTURE+"로 도착지는 "+CommonLibrary.DESTINATION+"로 설정되었습니다." ;
+                String result="출발지는 "+CommonLibrary.DEPARTURE+"로 도착지는 "+CommonLibrary.DESTINATION+"로 설정되었습니다. 연락을 기다려 주십시오" ;
                 DestinationActivity.myTTS.speak(result, TextToSpeech.QUEUE_FLUSH, null);
 
-                  activity.finish();
+                try {
+                    Thread.sleep(7000);
+                    DestinationActivity.myTTS.shutdown();
+                    activity.finish();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+
 
 
             }
