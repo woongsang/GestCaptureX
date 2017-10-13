@@ -1,9 +1,13 @@
 package com.ablethon.woongsang.gestcapturex.API;
 
 import com.ablethon.woongsang.gestcapturex.Activity.CallActivity;
+import com.ablethon.woongsang.gestcapturex.Activity.DepartureActivity;
+
+import com.ablethon.woongsang.gestcapturex.Activity.DestinationActivity;
 import com.ablethon.woongsang.gestcapturex.Activity.NewsActivity;
 
 import com.ablethon.woongsang.gestcapturex.VO.Article;
+import com.ablethon.woongsang.gestcapturex.VO.Location;
 import com.ablethon.woongsang.gestcapturex.VO.Person;
 
 import java.util.ArrayList;
@@ -15,18 +19,34 @@ import java.util.ArrayList;
 public class CommonLibrary {
     public static ArrayList<Person> PERSON_LIST = new ArrayList<Person>();
     public static ArrayList<Article> ARTICLE_LIST = new ArrayList<Article>();
-
+    public static String DEPARTURE;
+    public static String DESTINATION;
 
 
     public static void insertArticle(String title,String description){
         ARTICLE_LIST.add(new Article(title,description));
     }
 
-    public static void initArticleList(){
-        ProcessXMLTask xmlTask = new ProcessXMLTask();
-        xmlTask.execute("http://myhome.chosun.com/rss/www_section_rss.xml");
+    public static void initDepartureList(){
+        DepartureActivity.mDatas.add("서울대입구");
+        DepartureActivity.mDatas.add("낙성대");
+        DepartureActivity.mDatas.add("사당");
+        DepartureActivity.mDatas.add("방배");
+        DepartureActivity.mDatas.add("서초");
+        DepartureActivity.mDatas.add("교대");
+        DepartureActivity.mDatas.add("강남");
+
+    }
 
 
+    public static void initDestinationList(){
+        DestinationActivity.mDatas.add("서울대입구");
+        DestinationActivity.mDatas.add("낙성대");
+        DestinationActivity.mDatas.add("사당");
+        DestinationActivity.mDatas.add("방배");
+        DestinationActivity.mDatas.add("서초");
+        DestinationActivity.mDatas.add("교대");
+        DestinationActivity.mDatas.add("강남");
 
     }
     public static String getArticleDescription(String title){
