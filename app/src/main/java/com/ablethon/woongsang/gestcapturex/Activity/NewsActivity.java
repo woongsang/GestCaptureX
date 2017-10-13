@@ -9,6 +9,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.speech.tts.TextToSpeech;
 import android.support.annotation.RequiresApi;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AdapterView;
@@ -40,6 +41,8 @@ import java.util.List;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
+
+import static android.content.ContentValues.TAG;
 
 /**
  * Created by SangHeon on 2017-10-12.
@@ -77,7 +80,17 @@ public class NewsActivity  extends Activity implements TextToSpeech.OnInitListen
         ArrayAdapter adapter= new ArrayAdapter(this, android.R.layout.simple_list_item_1, mDatas);
         listview.setAdapter(adapter);
     }
+    @Override
+    public void onBackPressed() {
+        if(myTTS != null) {
 
+            myTTS.stop();
+            myTTS.shutdown();
+            Log.d(TAG, "TTS Destroyed");
+        }
+        finish();
+
+    }
 
     AdapterView.OnTouchListener scrollChecker = new  AdapterView.OnTouchListener() {
 
@@ -188,6 +201,7 @@ public class NewsActivity  extends Activity implements TextToSpeech.OnInitListen
             setListView();
             super.onPostExecute(result);
         }
+
     }
 
 }

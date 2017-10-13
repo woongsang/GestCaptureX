@@ -2,7 +2,7 @@ package com.ablethon.woongsang.gestcapturex.API;
 
 import com.ablethon.woongsang.gestcapturex.Activity.CallActivity;
 import com.ablethon.woongsang.gestcapturex.Activity.NewsActivity;
-import com.ablethon.woongsang.gestcapturex.Parser.NewsTop10;
+
 import com.ablethon.woongsang.gestcapturex.VO.Article;
 import com.ablethon.woongsang.gestcapturex.VO.Person;
 
