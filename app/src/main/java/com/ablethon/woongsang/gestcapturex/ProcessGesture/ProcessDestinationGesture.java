@@ -62,16 +62,17 @@ public class ProcessDestinationGesture  extends ProcessGesture {
                     public void run() {
                         String encDeparture="";
                         String encDestination="";
+                        String name="";
                         try {
+                            name = java.net.URLEncoder.encode(new String("김상헌".getBytes("UTF-8")));
                              encDeparture=java.net.URLEncoder.encode(new String(CommonLibrary.DEPARTURE.getBytes("UTF-8")));
                              encDestination=java.net.URLEncoder.encode(new String(CommonLibrary.DESTINATION.getBytes("UTF-8")));
                         } catch (UnsupportedEncodingException e) {
                             e.printStackTrace();
                         }
 
-
                         String tempUrl=CommonLibrary.MY_IP+"/groupware/request?departure="+encDeparture+"&destination="+encDestination+
-                                "&name=김상헌&"+"phone=01058781501";
+                                "&name="+name+"&phone=01058781501";
   //                      String tempUrl=CommonLibrary.MY_IP+"/groupware/request?departure="+"t"+"&destination="+"b";
                         URL url;
                         Log.i("ㅇㅇㅇㅇㅇㅇ",tempUrl+"");
