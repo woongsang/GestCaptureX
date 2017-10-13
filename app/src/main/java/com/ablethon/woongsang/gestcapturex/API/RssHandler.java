@@ -27,7 +27,7 @@ public class RssHandler extends DefaultHandler {
 
     boolean itemFound = false;
 
-    RssHandler() {
+    public RssHandler() {
     }
 
     public RssFeed getFeed() {

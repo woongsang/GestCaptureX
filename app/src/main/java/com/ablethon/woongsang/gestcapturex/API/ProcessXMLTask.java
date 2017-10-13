@@ -50,7 +50,7 @@ public class ProcessXMLTask extends AsyncTask<String, Void, Void> {
                 CommonLibrary.insertArticle(list.get(i).getTitle(),list.get(i).getDescription());
             }
             NewsActivity.setMdatas();
-            setListView();
+          new NewsActivity().setListView();
 
         } catch (MalformedURLException e) {
             e.printStackTrace();

@@ -4,6 +4,7 @@ import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
 import android.content.pm.PackageManager;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.speech.tts.TextToSpeech;
@@ -17,13 +18,28 @@ import android.widget.ListView;
 import com.ablethon.woongsang.gestcapturex.API.CommonLibrary;
 import com.ablethon.woongsang.gestcapturex.API.DownloadTask;
 import com.ablethon.woongsang.gestcapturex.API.ProcessXMLTask;
+import com.ablethon.woongsang.gestcapturex.API.RssHandler;
 import com.ablethon.woongsang.gestcapturex.API.TouchInterface;
 import com.ablethon.woongsang.gestcapturex.ProcessGesture.ProcessCallGesture;
 import com.ablethon.woongsang.gestcapturex.ProcessGesture.ProcessNewsGesture;
 import com.ablethon.woongsang.gestcapturex.R;
 import com.ablethon.woongsang.gestcapturex.VO.Article;
+import com.ablethon.woongsang.gestcapturex.VO.RssFeed;
+import com.ablethon.woongsang.gestcapturex.VO.RssItem;
 
+import org.xml.sax.InputSource;
+import org.xml.sax.SAXException;
+import org.xml.sax.XMLReader;
+
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
+import java.util.List;
+
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.parsers.SAXParser;
+import javax.xml.parsers.SAXParserFactory;
 
 /**
  * Created by SangHeon on 2017-10-12.
@@ -46,17 +62,19 @@ public class NewsActivity  extends Activity implements TextToSpeech.OnInitListen
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_news);
         listview= (ListView) findViewById(R.id.NewsListView);
-        if(mDatas.size()==0) {
-            CommonLibrary.initArticleList();
 
-        }
+
+            ProcessXMLTask xmlTask = new ProcessXMLTask();
+            xmlTask.execute("http://myhome.chosun.com/rss/www_section_rss.xml");
+
         itemSelector = -1;
-        myTTS = new TextToSpeech(this, this);
+
         callChecker=0;
         listview.setOnTouchListener(scrollChecker);
     }
     public void setListView(){
-        ArrayAdapter adapter= new ArrayAdapter(context, R.layout.bigfont_item, mDatas);
+        myTTS = new TextToSpeech(this, this);
+        ArrayAdapter adapter= new ArrayAdapter(this, android.R.layout.simple_list_item_1, mDatas);
         listview.setAdapter(adapter);
     }
 
@@ -81,10 +99,10 @@ public class NewsActivity  extends Activity implements TextToSpeech.OnInitListen
     };
 
     public static void setMdatas(){
-        if(CommonLibrary.ARTICLE_LIST.size()==0){
+
             for(int i=0;i<CommonLibrary.ARTICLE_LIST.size();i++){
                 NewsActivity.mDatas.add( CommonLibrary.ARTICLE_LIST.get(i).getTitle() );
-            }
+
 
         }
     }
@@ -124,6 +142,52 @@ public class NewsActivity  extends Activity implements TextToSpeech.OnInitListen
     protected void onDestroy() {
         super.onDestroy();
 
+    }
+    class ProcessXMLTask extends AsyncTask<String, Void, Void> {
+        private RssFeed mRssFeed = null;
+
+        protected Void doInBackground(String... urls) {
+            try {
+
+                URL rssUrl = new URL(urls[0]);
+                SAXParserFactory mySAXParserFactory = SAXParserFactory.newInstance();
+                SAXParser mySAXParser = mySAXParserFactory.newSAXParser();
+                XMLReader myXMLReader = mySAXParser.getXMLReader();
+                RssHandler myRSSHandler = new RssHandler();
+                myXMLReader.setContentHandler(myRSSHandler);
+                InputSource myInputSource = new InputSource(rssUrl.openStream());
+                myXMLReader.parse(myInputSource);
+
+                mRssFeed=myRSSHandler.getFeed();
+                List<RssItem> list = mRssFeed.getList();
+
+                for(int i=0;i<list.size();i++){
+                    CommonLibrary.insertArticle(list.get(i).getTitle(),list.get(i).getDescription());
+                }
+                NewsActivity.setMdatas();
+
+
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+                //   mResult.setText("Cannot connect RSS!");
+            } catch (ParserConfigurationException e) {
+                e.printStackTrace();
+                //   mResult.setText("Cannot connect RSS!");
+            } catch (SAXException e) {
+                e.printStackTrace();
+                // mResult.setText("Cannot connect RSS!");
+            } catch (IOException e) {
+                e.printStackTrace();
+                // mResult.setText("Cannot connect RSS!");
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void result) {
+            setListView();
+            super.onPostExecute(result);
+        }
     }
 
 }
