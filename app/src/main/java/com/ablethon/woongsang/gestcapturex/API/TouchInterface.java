@@ -164,11 +164,7 @@ public class TouchInterface {
                     str = str + " -> ";
             }
 
-            try {
-                pg.process( detectedPattern, mParent, context );
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            pg.process( detectedPattern, mParent, context );
 
             return true;
         }

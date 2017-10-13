@@ -15,14 +15,18 @@ import com.ablethon.woongsang.gestcapturex.VO.Location;
 import com.ablethon.woongsang.gestcapturex.VO.Vertex;
 import com.ablethon.woongsang.gestcapturex.Activity.WeatherActivity;
 
-import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
+
+/**
+ * Created by SangHeon on 2017-10-10.
+ */
+
 public class ProcessGesture  extends Activity{
 
-    public void process(ArrayList<Vertex> detectedPattern, Activity activity, Context context) throws IOException {}
+    public void process(ArrayList<Vertex> detectedPattern, Activity activity, Context context){}
 
     public void processMainGesture(ArrayList<Vertex> list, Activity activity, Context context){
 

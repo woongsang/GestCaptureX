@@ -24,6 +24,7 @@ public class ThreeDayWeatherParser extends DownloadTask {
             double min = 100;
             double sum = 0;
             double avg;
+
             for (int i = 0; i < obList.length(); i++){ // every three hours starting from 6am until 9pm
                 JSONObject ob = obList.getJSONObject(i);
                 double temp = ob.getJSONObject("main").getDouble("temp");
