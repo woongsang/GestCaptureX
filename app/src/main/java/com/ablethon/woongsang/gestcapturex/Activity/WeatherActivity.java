@@ -10,47 +10,100 @@ import android.os.Build;
 import android.os.Bundle;
 import android.speech.tts.TextToSpeech;
 import android.support.annotation.RequiresApi;
+import android.support.v4.app.ActivityCompat;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ListView;
 
 import com.ablethon.woongsang.gestcapturex.API.DownloadTask;
+import com.ablethon.woongsang.gestcapturex.API.TouchInterface;
+import com.ablethon.woongsang.gestcapturex.Parser.*;
+import com.ablethon.woongsang.gestcapturex.ProcessGesture.ProcessCallGesture;
+import com.ablethon.woongsang.gestcapturex.ProcessGesture.ProcessWeatherGesture;
 import com.ablethon.woongsang.gestcapturex.R;
 
+import java.util.ArrayList;
+
+import static android.content.ContentValues.TAG;
 import static android.location.LocationManager.GPS_PROVIDER;
 
 
 public class WeatherActivity extends Activity implements TextToSpeech.OnInitListener {
 
-    Button WeatherInfoBtn;
-    String city = "Seoul";
+    public static TextToSpeech myTTS;
 
+    public static ArrayList<String> options = new ArrayList<String>();
+    ListView listview;
+    public static int selector;
+    Context context = this;
+    private static final String appid = "&appid=1c07e40d403816de4991116b22488b29";
+
+    static DownloadTask task = null;
+
+    @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_weather);
+        options.clear();
+        options.add("현재 날씨");
+        options.add("오늘의 날씨");
+        options.add("3일 날씨");
+        selector = -1;
+        myTTS = new TextToSpeech(this, this);
 
-        WeatherInfoBtn = (Button)findViewById(R.id.WeatherInfoBtn);
-        WeatherInfoBtn.setOnClickListener(new View.OnClickListener() {
-            @RequiresApi(api = Build.VERSION_CODES.M)
-            public void onClick(View v) {
-                if (checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                    requestPermissions (new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
+        ArrayAdapter adapter = new ArrayAdapter(this, R.layout.bigfont_item, options);
+        listview = (ListView) findViewById(R.id.WeatherListView);
+        listview.setAdapter(adapter);
 
-                    return;
-                }
-                // instantiate the location manager, note you will need to request permissions in your manifest
-                LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-                // get the last know location from your location manager.
-                Location location = locationManager.getLastKnownLocation(GPS_PROVIDER);
-                // now get the lat/lon from the location and do something with it.
-                double latitude = location.getLatitude();
-                double longitude = location.getLongitude();
+        listview.setOnTouchListener(scrollChecker);
+    }
 
-                getWeatherAt(latitude, longitude);
+
+    AdapterView.OnTouchListener scrollChecker = new  AdapterView.OnTouchListener() {
+
+
+        ProcessWeatherGesture pg= new ProcessWeatherGesture();                               //to prcessing gesture
+        TouchInterface TI = new TouchInterface((Activity) context,context,pg);       //to prcessing gesture
+
+        @RequiresApi(api = Build.VERSION_CODES.M)
+        @Override
+        public boolean onTouch(View v, MotionEvent event) {
+            if (checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                requestPermissions (new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
+
+                // MY_PERMISSIONS_REQUEST_READ_CONTACTS is an
+                // app-defined int constant
+
+                return false;
             }
-        });
+            return TI.gestureInterface(event);
+        }
+    };
 
+    public static String getNextOption(int operator){
+        if(operator==1){
+            if(selector < options.size()-1 ) {
+                selector++;
+            }else {
+                selector = 0;
+            }
+        }else{
+            if(selector > 0 ) {
+                selector--;
+            }else {
+                if(selector==-1){
+                    selector=0;
+                }else {
+                    selector = options.size() - 1;
+                }
+            }
+        }
+        return options.get(selector);
     }
 
     @Override
@@ -58,30 +111,39 @@ public class WeatherActivity extends Activity implements TextToSpeech.OnInitList
 
     }
 
-    public void getWeather(){
+    public static void getWeather(Location location, String selected_option){
 
-        Log.i ("city name", city);
+        double latitude = location.getLatitude();
+        double longitude = location.getLongitude();
 
-        DownloadTask task = new DownloadTask();
-        task.execute("http://api.openweathermap.org/data/2.5/forecast?q="
-                + city +
-                "&appid=1c07e40d403816de4991116b22488b29");
+        String url = "http://api.openweathermap.org/data/2.5/";
+
+        if (selected_option.equals(options.get(0)) ){ // current weather
+            task = new CurrentWeatherParser();
+            url += "weather?units=metric&lang=kr&lat=" + latitude + "&lon=" + longitude;
+        }
+        else if (selected_option.equals(options.get(1))){ // today's weather
+            task = new TodaysWeatherParser();
+            url += "forecast?units=metric&lang=kr&lat=" + latitude + "&lon=" + longitude + "&cnt=8";
+        }
+        else if (selected_option.equals(options.get(2))) { // 3 day weather
+            task = new ThreeDayWeatherParser();
+            url += "forecast?units=metric&lang=kr&lat=" + latitude + "&lon=" + longitude + "&cnt=24";
+        }
+        task.execute(url + appid);
     }
 
-    public void getWeatherAt(double latitude, double longitude){
-
-        Log.i ("latitude", Double.toString(latitude));
-        Log.i ("longitude", Double.toString(longitude));
-
-        //InputMethodManager mgr = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-        //mgr.hideSoftInputFromWindow(cityName.getWindowToken(), 0);
-
-        DownloadTask task = new DownloadTask();
-        task.execute("http://api.openweathermap.org/data/2.5/forecast?lat=" + latitude
-                        + "&lon=" + longitude +
-                        "&appid=1c07e40d403816de4991116b22488b29");
+    @Override
+    protected void onDestroy() {
 
 
+        //Close the Text to Speech Library
+        if(myTTS != null) {
+
+            myTTS.stop();
+            myTTS.shutdown();
+            Log.d(TAG, "TTS Destroyed");
+        }
+        super.onDestroy();
     }
-
 }

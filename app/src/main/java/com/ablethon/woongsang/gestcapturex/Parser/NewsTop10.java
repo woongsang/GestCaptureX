@@ -8,8 +8,11 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+/**
+ * Created by SangHeon on 2017-10-13.
+ */
 
-public class WeatherFiveDays extends DownloadTask {
+public class NewsTop10 extends DownloadTask {
     @Override
     protected void onPostExecute(String result) {
         super.onPostExecute(result);

@@ -4,6 +4,7 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.CALL_PHONE" />
 
     <application
@@ -26,8 +27,17 @@
 
 
         <!-- CallActivity -->
-        <activity android:name=".Activity.CallActivity"
-            />
+        <activity android:name=".Activity.CallActivity"    />
+
+        <!-- NewsActivity -->
+        <activity android:name=".Activity.NewsActivity"     />
+
+        <!-- LocationActivity -->
+        <activity android:name=".Activity.DepartureActivity"     />
+
+        <!-- DestinationActivity -->
+        <activity android:name=".Activity.DestinationActivity"     />
+
     </application>
 
 </manifest>

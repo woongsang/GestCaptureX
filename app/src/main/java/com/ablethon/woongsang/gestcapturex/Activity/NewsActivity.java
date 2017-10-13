@@ -4,10 +4,12 @@ import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
 import android.content.pm.PackageManager;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.speech.tts.TextToSpeech;
 import android.support.annotation.RequiresApi;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AdapterView;
@@ -15,11 +17,32 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import com.ablethon.woongsang.gestcapturex.API.CommonLibrary;
+import com.ablethon.woongsang.gestcapturex.API.DownloadTask;
+import com.ablethon.woongsang.gestcapturex.API.ProcessXMLTask;
+import com.ablethon.woongsang.gestcapturex.API.RssHandler;
 import com.ablethon.woongsang.gestcapturex.API.TouchInterface;
 import com.ablethon.woongsang.gestcapturex.ProcessGesture.ProcessCallGesture;
+import com.ablethon.woongsang.gestcapturex.ProcessGesture.ProcessNewsGesture;
 import com.ablethon.woongsang.gestcapturex.R;
+import com.ablethon.woongsang.gestcapturex.VO.Article;
+import com.ablethon.woongsang.gestcapturex.VO.RssFeed;
+import com.ablethon.woongsang.gestcapturex.VO.RssItem;
 
+import org.xml.sax.InputSource;
+import org.xml.sax.SAXException;
+import org.xml.sax.XMLReader;
+
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
+import java.util.List;
+
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.parsers.SAXParser;
+import javax.xml.parsers.SAXParserFactory;
+
+import static android.content.ContentValues.TAG;
 
 /**
  * Created by SangHeon on 2017-10-12.
@@ -28,53 +51,57 @@ import java.util.ArrayList;
 public class NewsActivity  extends Activity implements TextToSpeech.OnInitListener {
 
     public static TextToSpeech myTTS;
+    static DownloadTask task = null;
 
     public static ArrayList<String> mDatas= new ArrayList<String>();
-    ListView listview;
+    static ListView listview;
     public static int itemSelector = -1;
     Context context=this;
     int callChecker = 0;
+    ArrayAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_call);
+        setContentView(R.layout.activity_news);
+        listview= (ListView) findViewById(R.id.NewsListView);
 
-        CommonLibrary.initArticleList();
+
+            ProcessXMLTask xmlTask = new ProcessXMLTask();
+            xmlTask.execute("http://myhome.chosun.com/rss/www_section_rss.xml");
+
         itemSelector = -1;
-        myTTS = new TextToSpeech(this, this);
+
         callChecker=0;
-
-        for(int i=0;i<CommonLibrary.PERSON_LIST.size();i++){
-            mDatas.add( CommonLibrary.PERSON_LIST.get(i).getName() );
-        }
-
-        ArrayAdapter adapter= new ArrayAdapter(this, R.layout.bigfont_item, mDatas);
-
-        listview= (ListView) findViewById(R.id.CallListView);
-        listview.setAdapter(adapter);
-
         listview.setOnTouchListener(scrollChecker);
+    }
+    public void setListView(){
+        myTTS = new TextToSpeech(this, this);
+        ArrayAdapter adapter= new ArrayAdapter(this, android.R.layout.simple_list_item_1, mDatas);
+        listview.setAdapter(adapter);
+    }
+    @Override
+    public void onBackPressed() {
+        if(myTTS != null) {
+
+            myTTS.stop();
+            myTTS.shutdown();
+            Log.d(TAG, "TTS Destroyed");
+        }
+        finish();
 
     }
 
     AdapterView.OnTouchListener scrollChecker = new  AdapterView.OnTouchListener() {
 
 
-        ProcessCallGesture pg= new ProcessCallGesture();                               //to prcessing gesture
+        ProcessNewsGesture pg= new ProcessNewsGesture();                               //to prcessing gesture
         TouchInterface TI = new TouchInterface((Activity) context,context,pg);       //to prcessing gesture
 
         @RequiresApi(api = Build.VERSION_CODES.M)
         @Override
         public boolean onTouch(View v, MotionEvent event) {
-            if (checkSelfPermission(Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
-                requestPermissions (new String[]{Manifest.permission.CALL_PHONE}, 1);
 
-                // MY_PERMISSIONS_REQUEST_READ_CONTACTS is an
-                // app-defined int constant
-
-                return false;
-            }
 
             if(TI.gestureInterface(event)){    //to prcessing gesture
                 return true;                //to prcessing gesture
@@ -84,12 +111,19 @@ public class NewsActivity  extends Activity implements TextToSpeech.OnInitListen
         }
     };
 
+    public static void setMdatas(){
 
+            for(int i=0;i<CommonLibrary.ARTICLE_LIST.size();i++){
+                NewsActivity.mDatas.add( CommonLibrary.ARTICLE_LIST.get(i).getTitle() );
+
+
+        }
+    }
     /*
     *  다음 인덱스를 구하는 메소드
     *  operator이 2이면 위로이동 1이면 아래로 이동
     * */
-    public static String getNextName(int operator){
+    public static String getNextContent(int operator){
         if(operator==1){
             if(itemSelector < mDatas.size()-1 ) {
                 itemSelector++;
@@ -112,7 +146,7 @@ public class NewsActivity  extends Activity implements TextToSpeech.OnInitListen
 
     public void onInit(int status) {
         String myText1 = "뉴스기사를 선택하려면 위 아래로 드래그해주세요";
-        String myText2 = "반갑다람쥐.";
+        String myText2 = "해당 뉴스를 청취하시려면 좌 우로 드래그해주세요.";
         myTTS.speak(myText1, TextToSpeech.QUEUE_FLUSH, null);
         myTTS.speak(myText2, TextToSpeech.QUEUE_ADD, null);
     }
@@ -122,4 +156,52 @@ public class NewsActivity  extends Activity implements TextToSpeech.OnInitListen
         super.onDestroy();
 
     }
+    class ProcessXMLTask extends AsyncTask<String, Void, Void> {
+        private RssFeed mRssFeed = null;
+
+        protected Void doInBackground(String... urls) {
+            try {
+
+                URL rssUrl = new URL(urls[0]);
+                SAXParserFactory mySAXParserFactory = SAXParserFactory.newInstance();
+                SAXParser mySAXParser = mySAXParserFactory.newSAXParser();
+                XMLReader myXMLReader = mySAXParser.getXMLReader();
+                RssHandler myRSSHandler = new RssHandler();
+                myXMLReader.setContentHandler(myRSSHandler);
+                InputSource myInputSource = new InputSource(rssUrl.openStream());
+                myXMLReader.parse(myInputSource);
+
+                mRssFeed=myRSSHandler.getFeed();
+                List<RssItem> list = mRssFeed.getList();
+
+                for(int i=0;i<list.size();i++){
+                    CommonLibrary.insertArticle(list.get(i).getTitle(),list.get(i).getDescription());
+                }
+                NewsActivity.setMdatas();
+
+
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+                //   mResult.setText("Cannot connect RSS!");
+            } catch (ParserConfigurationException e) {
+                e.printStackTrace();
+                //   mResult.setText("Cannot connect RSS!");
+            } catch (SAXException e) {
+                e.printStackTrace();
+                // mResult.setText("Cannot connect RSS!");
+            } catch (IOException e) {
+                e.printStackTrace();
+                // mResult.setText("Cannot connect RSS!");
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void result) {
+            setListView();
+            super.onPostExecute(result);
+        }
+
+    }
+
 }

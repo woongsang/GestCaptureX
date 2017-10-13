@@ -9,6 +9,7 @@ import com.ablethon.woongsang.gestcapturex.ProcessGesture.ProcessGesture;
 import com.ablethon.woongsang.gestcapturex.VO.Vertex;
 
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class TouchInterface {
@@ -20,20 +21,20 @@ public class TouchInterface {
         initialize();
     }
     MotionEvent motionEvent;
-        Activity mParent;
+    Activity mParent;
     ProcessGesture pg;
-        static final float PI = 3.1415926535f;
-        //static final float RATE_TO_DEGREE = 180/PI;
-        static final int NUM_OF_SECTIONS = 8;
-        static final float MIN_ROUND_ANGLE = 2*PI* 11/12;
+    static final float PI = 3.1415926535f;
+    //static final float RATE_TO_DEGREE = 180/PI;
+    static final int NUM_OF_SECTIONS = 8;
+    static final float MIN_ROUND_ANGLE = 2*PI* 11/12;
 
-        static final int BACKGROUND_COLOR = Color.WHITE;
-        static final int LINE_THICKNESS = 15;
+    static final int BACKGROUND_COLOR = Color.WHITE;
+    static final int LINE_THICKNESS = 15;
 
-        Context context;
-        ArrayList<Vertex> detectedPattern;
-        ArrayList<Vertex> userLine;
-        ArrayList<Vertex> interpolation;
+    Context context;
+    ArrayList<Vertex> detectedPattern;
+    ArrayList<Vertex> userLine;
+    ArrayList<Vertex> interpolation;
 
     public boolean gestureInterface(MotionEvent motionEvent){
         this.motionEvent=motionEvent;
@@ -163,35 +164,39 @@ public class TouchInterface {
                     str = str + " -> ";
             }
 
-            pg.process( detectedPattern, mParent, context );
+            try {
+                pg.process( detectedPattern, mParent, context );
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
 
             return true;
         }
         return false;
 
     }
-        private float getAngle(float x2, float y2) {
-                float x1 = 1.f;
-                float y1 = 0.f;
+    private float getAngle(float x2, float y2) {
+        float x1 = 1.f;
+        float y1 = 0.f;
 
-                if (x1 == x2){
-                        x2 *= 2;
-                        y2 *= 2;
-                }
-                float radian = -(float)Math.atan((y2-y1)/(x2-x1));
-
-                if (x2 < 0 && y2 == 0){
-                        radian -= PI;
-                }
-
-                if (x1 > x2 && y1 != y2) {
-                        radian += PI;
-                }
-                else if (x1 < x2 && y1 < y2) {
-                        radian += 2*PI;
-                }
-                return radian;
+        if (x1 == x2){
+            x2 *= 2;
+            y2 *= 2;
         }
+        float radian = -(float)Math.atan((y2-y1)/(x2-x1));
+
+        if (x2 < 0 && y2 == 0){
+            radian -= PI;
+        }
+
+        if (x1 > x2 && y1 != y2) {
+            radian += PI;
+        }
+        else if (x1 < x2 && y1 < y2) {
+            radian += 2*PI;
+        }
+        return radian;
+    }
     private void initialize() {
         userLine = new ArrayList<>();
         interpolation = new ArrayList<>();
