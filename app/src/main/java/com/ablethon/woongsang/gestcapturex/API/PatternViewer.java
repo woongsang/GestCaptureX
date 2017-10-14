@@ -5,13 +5,16 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Toast;
 
 import com.ablethon.woongsang.gestcapturex.ProcessGesture.ProcessGesture;
+import com.ablethon.woongsang.gestcapturex.ProcessGesture.ProcessMainGesture;
 import com.ablethon.woongsang.gestcapturex.VO.Vertex;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class PatternViewer extends View {
@@ -151,13 +154,22 @@ public class PatternViewer extends View {
             }
             interpolation.add(userLine.get(userLine.size()-1));
 
+            ProcessGesture pg= new ProcessMainGesture();
+
             if(anglesSum2 > MIN_ROUND_ANGLE){
                 int round = (int) (anglesSum2 / (2*PI));
                 if (anglesSum2 % (2*PI) > MIN_ROUND_ANGLE){
                     round++;
                 }
+                Log.i("circle pattern? ", "yes");
+                try {
+                    pg.process( interpolation, mParent, context, true);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
                 Toast.makeText(this.getContext(), "원(반시계방향) "+ round + "바퀴" , Toast.LENGTH_SHORT).show();
-                return false;
+                return true;
+
             }
 
             else if (-anglesSum2 > MIN_ROUND_ANGLE){
@@ -165,8 +177,14 @@ public class PatternViewer extends View {
                 if (-anglesSum2 % (2*PI) > MIN_ROUND_ANGLE){
                     round++;
                 }
-                Toast.makeText(this.getContext(), "원(시계방향) "+ round + "바퀴" , Toast.LENGTH_SHORT).show();
-                return false;
+                Log.i("circle pattern? ", "yes");
+                try {
+                    pg.process( interpolation, mParent, context, true);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                Toast.makeText(this.getContext(), "원(반시계방향) "+ round + "바퀴" , Toast.LENGTH_SHORT).show();
+                return true;
             }
 
             float movedAngle = 0;
@@ -209,8 +227,12 @@ public class PatternViewer extends View {
                 if( i < detectedPattern.size()-1 )
                     str = str + " -> ";
             }
-            ProcessGesture pg= new ProcessGesture();
-            pg.processMainGesture( detectedPattern, mParent, context );
+
+            try {
+                pg.process( detectedPattern, mParent, context, false );
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
 
             Toast.makeText(this.getContext(), str, Toast.LENGTH_SHORT).show();
             return true;

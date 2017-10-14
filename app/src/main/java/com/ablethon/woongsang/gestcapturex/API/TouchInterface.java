@@ -8,7 +8,6 @@ import android.view.MotionEvent;
 import com.ablethon.woongsang.gestcapturex.ProcessGesture.ProcessGesture;
 import com.ablethon.woongsang.gestcapturex.VO.Vertex;
 
-
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -36,7 +35,7 @@ public class TouchInterface {
     ArrayList<Vertex> userLine;
     ArrayList<Vertex> interpolation;
 
-    public boolean gestureInterface(MotionEvent motionEvent){
+    public boolean gestureInterface(MotionEvent motionEvent) {
         this.motionEvent=motionEvent;
         if (motionEvent.getAction() == MotionEvent.ACTION_DOWN){ //when the finger is touching the screen
             userLine.clear();
@@ -165,7 +164,7 @@ public class TouchInterface {
             }
 
             try {
-                pg.process( detectedPattern, mParent, context );
+                pg.process( detectedPattern, mParent, context, false);
             } catch (IOException e) {
                 e.printStackTrace();
             }
