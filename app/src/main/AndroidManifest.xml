@@ -44,9 +44,11 @@
         <!-- DestinationActivity -->
         <activity android:name=".Activity.DestinationActivity"     />
 
-        <!-- DestinationActivity -->
+        <!-- RoadAnounceActivity -->
         <activity android:name=".Activity.RoadAnounceActivity"     />
 
+        <!-- TrafficInfoActivity -->
+        <activity android:name=".Activity.TrafficInfoActivity"     />
 
         <service android:name="com.perples.recosdk.RECOBeaconService" />
     </application>
