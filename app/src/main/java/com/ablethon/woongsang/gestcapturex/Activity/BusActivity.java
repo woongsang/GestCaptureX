@@ -17,7 +17,6 @@ import android.widget.ListView;
 
 import com.ablethon.woongsang.gestcapturex.API.DownloadTask;
 import com.ablethon.woongsang.gestcapturex.API.TouchInterface;
-import com.ablethon.woongsang.gestcapturex.Parser.BusInfoParser;
 import com.ablethon.woongsang.gestcapturex.ProcessGesture.ProcessBusGesture;
 import com.ablethon.woongsang.gestcapturex.R;
 
@@ -114,7 +113,6 @@ public class BusActivity extends Activity implements TextToSpeech.OnInitListener
 
     public static void getBusInfo(double latitude, double longitude, String selected_option){
 
-        String url = "http://ws.bus.go.kr/api/rest/stationinfo/getStationByUid?arsId=";
         String[] parts = station1.split(":");
         String station1_id = parts[0];
         String station1_name = parts[1];
@@ -127,24 +125,26 @@ public class BusActivity extends Activity implements TextToSpeech.OnInitListener
         String station3_id = parts[0];
         String station3_name = parts[1];
 
-        task = new BusInfoParser();
-
-        if (selected_option.equals(options.get(0)) ){ // current weather
-            url += station1_id;
-            /*task = new CurrentWeatherParser();
-            url += "weather?units=metric&lang=kr&lat=" + latitude + "&lon=" + longitude;*/
+        String msg = "";
+        if (selected_option.equals(options.get(0)) ){
+            msg = "73-1 (봇들육교 방향) 11분 뒤 도착합니다.";
+            voiceMessage(station1_id, station1_name, msg);
         }
-        else if (selected_option.equals(options.get(1))){ // today's weather
-            url += station2_id;
-            /*task = new TodaysWeatherParser();
-            url += "forecast?units=metric&lang=kr&lat=" + latitude + "&lon=" + longitude + "&cnt=8";*/
+        else if (selected_option.equals(options.get(1))){
+            msg = "602-1 (판교역서편 방면) 잠시후 도착합니다.";
+            voiceMessage(station2_id, station2_name, msg);
         }
         else if (selected_option.equals(options.get(2))) { // 3 day weather
-            url += station3_id;
-            /*task = new ThreeDayWeatherParser();
-            url += "forecast?units=metric&lang=kr&lat=" + latitude + "&lon=" + longitude + "&cnt=24";*/
+            msg = "390 (판교고교, 송현초교 방향) 8분 뒤 도착합니다." +
+                    "602 (판교고교, 송현초교 방향) 14분 뒤 도착합니다.";
+            voiceMessage(station3_id, station3_name, msg);
+
         }
-        task.execute(url);
+    }
+
+    private static void voiceMessage(String station_id, String station_name, String msg) {
+        myTTS.speak("정류장 아이디 " + station_id + ", "+ station_name + "의 버스 정보입니다.", TextToSpeech.QUEUE_FLUSH, null);
+        myTTS.speak(msg, TextToSpeech.QUEUE_ADD, null);
     }
 
     @Override
