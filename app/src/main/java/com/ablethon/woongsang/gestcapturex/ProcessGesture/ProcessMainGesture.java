@@ -10,6 +10,7 @@ import com.ablethon.woongsang.gestcapturex.Activity.BusActivity;
 import com.ablethon.woongsang.gestcapturex.Activity.CallActivity;
 import com.ablethon.woongsang.gestcapturex.Activity.MainActivity;
 import com.ablethon.woongsang.gestcapturex.Activity.RoadAnounceActivity;
+import com.ablethon.woongsang.gestcapturex.Activity.TrafficInfoActivity;
 import com.ablethon.woongsang.gestcapturex.Activity.WeatherActivity;
 import com.ablethon.woongsang.gestcapturex.VO.Vertex;
 
@@ -52,7 +53,7 @@ public class ProcessMainGesture extends ProcessGesture {
                 msg = "교통정보";
                 Log.i("tttt", msg);
                 MainActivity.myTTS.speak(msg, TextToSpeech.QUEUE_FLUSH, null);
-                intent = new Intent(context, BusActivity.class);
+                intent = new Intent(context, TrafficInfoActivity.class);
             }
         }
         Log.i("is circle? ", Boolean.toString(isCircle));

@@ -41,7 +41,7 @@ public class TrafficInfoActivity extends Activity implements TextToSpeech.OnInit
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_call);
+        setContentView(R.layout.activity_traffic_info);
 
         CommonLibrary.initTrafficInfoList();
         nameSelector = -1;
