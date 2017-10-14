@@ -112,7 +112,7 @@ public class BusActivity extends Activity implements TextToSpeech.OnInitListener
 
     }
 
-    public static void getBusInfo(String selected_option){
+    public static void getBusInfo(double latitude, double longitude, String selected_option){
 
         String url = "http://ws.bus.go.kr/api/rest/stationinfo/getStationByUid?arsId=";
         String[] parts = station1.split(":");

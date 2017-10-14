@@ -13,7 +13,7 @@ import android.support.v4.app.ActivityCompat;
 import android.util.Log;
 import android.widget.Toast;
 
-import com.ablethon.woongsang.gestcapturex.Activity.WeatherActivity;
+import com.ablethon.woongsang.gestcapturex.Activity.BusActivity;
 import com.ablethon.woongsang.gestcapturex.VO.Vertex;
 
 import java.io.IOException;
@@ -44,23 +44,23 @@ public class ProcessBusGesture extends ProcessGesture {
 
         if (detectedPattern.size() == 1) {
             if (detectedPattern.get(0).getSection() == 2) { //위->아래로 스크롤
-                selected_option = WeatherActivity.getNextOption(1);
-                WeatherActivity.myTTS.speak(city_name + " " + selected_option, TextToSpeech.QUEUE_FLUSH, null);
+                selected_option = BusActivity.getNextOption(1);
+                BusActivity.myTTS.speak(city_name + " " + selected_option, TextToSpeech.QUEUE_FLUSH, null);
                 Toast.makeText(context, city_name + " " + selected_option, Toast.LENGTH_LONG).show();
             } else if (detectedPattern.get(0).getSection() == 6) {   //아래->위로 스크롤
-                selected_option = WeatherActivity.getNextOption(2);
-                WeatherActivity.myTTS.speak(city_name + " " + selected_option, TextToSpeech.QUEUE_FLUSH, null);
+                selected_option = BusActivity.getNextOption(2);
+                BusActivity.myTTS.speak(city_name + " " + selected_option, TextToSpeech.QUEUE_FLUSH, null);
                 Toast.makeText(context, city_name + " " + selected_option, Toast.LENGTH_LONG).show();
             } else if (detectedPattern.get(0).getSection() == 0 || detectedPattern.get(0).getSection() == 4) {       //좌->우로 스크롤
-                if (WeatherActivity.selector < 0) {
+                if (BusActivity.selector < 0) {
 
-                    WeatherActivity.selector = 0;
+                    BusActivity.selector = 0;
 
                 }
 
 
 
-                WeatherActivity.getWeather(latitude, longitude, selected_option);
+                BusActivity.getBusInfo(latitude, longitude, selected_option);
 
             }
 
