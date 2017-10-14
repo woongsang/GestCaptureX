@@ -56,11 +56,11 @@ public class RoadAnounceActivity extends Activity implements TextToSpeech.OnInit
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_anounce_road);
 
-        readBeacon();
+      //  readBeacon();
       //  CommonLibrary.initPersonList();
         itemSelector = -1;
         myTTS = new TextToSpeech(this, this);
-        callChecker=0;
+      //  callChecker=0;
 
 //        for(int i=0;i<CommonLibrary.PERSON_LIST.size();i++){
 //            mDatas.add( CommonLibrary.PERSON_LIST.get(i).getName() );
@@ -71,7 +71,28 @@ public class RoadAnounceActivity extends Activity implements TextToSpeech.OnInit
         listview= (ListView) findViewById(R.id.RoadAnounceListView);
         listview.setAdapter(adapter);
 
-        listview.setOnTouchListener(scrollChecker);
+
+        try {
+            Thread.sleep(5000);
+            myTTS.speak("현재위치는 화장실 앞 입니다. 엘레베이터 20m전 입니다.", TextToSpeech.QUEUE_FLUSH, null);
+
+            Thread.sleep(5000);
+            myTTS.speak("현재위치는 화장실 앞 입니다. 엘레베이터 12m전 입니다.", TextToSpeech.QUEUE_FLUSH, null);
+
+            Thread.sleep(5000);
+            myTTS.speak("현재위치는 엘레베이터 앞 입니다. 강당 20m전 입니다.", TextToSpeech.QUEUE_FLUSH, null);
+
+
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+
+
+
+
+
+     //   listview.setOnTouchListener(scrollChecker);
 
     }
 
