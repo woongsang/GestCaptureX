@@ -17,10 +17,8 @@ import android.widget.ListView;
 
 import com.ablethon.woongsang.gestcapturex.API.DownloadTask;
 import com.ablethon.woongsang.gestcapturex.API.TouchInterface;
-import com.ablethon.woongsang.gestcapturex.Parser.CurrentWeatherParser;
-import com.ablethon.woongsang.gestcapturex.Parser.ThreeDayWeatherParser;
-import com.ablethon.woongsang.gestcapturex.Parser.TodaysWeatherParser;
-import com.ablethon.woongsang.gestcapturex.ProcessGesture.ProcessWeatherGesture;
+import com.ablethon.woongsang.gestcapturex.Parser.BusInfoParser;
+import com.ablethon.woongsang.gestcapturex.ProcessGesture.ProcessBusGesture;
 import com.ablethon.woongsang.gestcapturex.R;
 
 import java.util.ArrayList;
@@ -28,7 +26,7 @@ import java.util.ArrayList;
 import static android.content.ContentValues.TAG;
 
 
-public class WeatherActivity extends Activity implements TextToSpeech.OnInitListener {
+public class BusActivity extends Activity implements TextToSpeech.OnInitListener {
 
     public static TextToSpeech myTTS;
 
@@ -36,24 +34,31 @@ public class WeatherActivity extends Activity implements TextToSpeech.OnInitList
     ListView listview;
     public static int selector;
     Context context = this;
-    private static final String appid = "&appid=1c07e40d403816de4991116b22488b29";
+    //private static final String appid = "&appid=1c07e40d403816de4991116b22488b29";
 
     static DownloadTask task = null;
+    private static String station1 = "";
+    private static String station2 = "";
+    private static String station3 = "";
 
     @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_weather);
+        setContentView(R.layout.activity_bus);
+        station1 = "07775:한국바이오협회";
+        station2 = "07781:우주공원";
+        station3 = "05206:신미주아파트";
         options.clear();
-        options.add("현재 날씨");
-        options.add("오늘의 날씨");
-        options.add("3일 날씨");
+        options.add(station1);
+        options.add(station2);
+        options.add(station3);
+
         selector = 0;
         myTTS = new TextToSpeech(this, this);
 
         ArrayAdapter adapter = new ArrayAdapter(this, R.layout.bigfont_item, options);
-        listview = (ListView) findViewById(R.id.WeatherListView);
+        listview = (ListView) findViewById(R.id.BusListView);
         listview.setAdapter(adapter);
 
         listview.setOnTouchListener(scrollChecker);
@@ -77,7 +82,7 @@ public class WeatherActivity extends Activity implements TextToSpeech.OnInitList
             return TI.gestureInterface(event);
         }
 
-        ProcessWeatherGesture pg= new ProcessWeatherGesture();                               //to prcessing gesture
+        ProcessBusGesture pg= new ProcessBusGesture();                               //to prcessing gesture
         TouchInterface TI = new TouchInterface((Activity) context,context,pg);       //to prcessing gesture
     };
 
@@ -107,23 +112,39 @@ public class WeatherActivity extends Activity implements TextToSpeech.OnInitList
 
     }
 
-    public static void getWeather(double latitude, double longitude , String selected_option){
+    public static void getBusInfo(String selected_option){
 
-        String url = "http://api.openweathermap.org/data/2.5/";
+        String url = "http://ws.bus.go.kr/api/rest/stationinfo/getStationByUid?arsId=";
+        String[] parts = station1.split(":");
+        String station1_id = parts[0];
+        String station1_name = parts[1];
+
+        parts = station2.split(":");
+        String station2_id = parts[0];
+        String station2_name = parts[1];
+
+        parts = station3.split(":");
+        String station3_id = parts[0];
+        String station3_name = parts[1];
+
+        task = new BusInfoParser();
 
         if (selected_option.equals(options.get(0)) ){ // current weather
-            task = new CurrentWeatherParser();
-            url += "weather?units=metric&lang=kr&lat=" + latitude + "&lon=" + longitude;
+            url += station1_id;
+            /*task = new CurrentWeatherParser();
+            url += "weather?units=metric&lang=kr&lat=" + latitude + "&lon=" + longitude;*/
         }
         else if (selected_option.equals(options.get(1))){ // today's weather
-            task = new TodaysWeatherParser();
-            url += "forecast?units=metric&lang=kr&lat=" + latitude + "&lon=" + longitude + "&cnt=8";
+            url += station2_id;
+            /*task = new TodaysWeatherParser();
+            url += "forecast?units=metric&lang=kr&lat=" + latitude + "&lon=" + longitude + "&cnt=8";*/
         }
         else if (selected_option.equals(options.get(2))) { // 3 day weather
-            task = new ThreeDayWeatherParser();
-            url += "forecast?units=metric&lang=kr&lat=" + latitude + "&lon=" + longitude + "&cnt=24";
+            url += station3_id;
+            /*task = new ThreeDayWeatherParser();
+            url += "forecast?units=metric&lang=kr&lat=" + latitude + "&lon=" + longitude + "&cnt=24";*/
         }
-        task.execute(url + appid);
+        task.execute(url);
     }
 
     @Override

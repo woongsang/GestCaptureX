@@ -22,8 +22,8 @@ import java.util.List;
 import java.util.Locale;
 
 
-public class ProcessWeatherGesture extends ProcessGesture {
-    String selected_option = "현재 날씨";
+public class ProcessBusGesture extends ProcessGesture {
+    String selected_option = "07775:한국바이오협회";
 
     @RequiresApi(api = Build.VERSION_CODES.M)
 

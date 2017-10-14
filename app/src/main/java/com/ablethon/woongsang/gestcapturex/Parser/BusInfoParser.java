@@ -9,7 +9,7 @@ import com.ablethon.woongsang.gestcapturex.Activity.WeatherActivity;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class CurrentWeatherParser extends DownloadTask {
+public class BusInfoParser extends DownloadTask {
     @Override
     protected void onPostExecute(String result) {
         super.onPostExecute(result);

@@ -39,7 +39,7 @@ public class TodaysWeatherParser extends DownloadTask {
             }
             avg = sum / obList.length();
 
-            String msg = "평균 기온: " + (int)avg + "도, 최고 기온: " + (int)max + "도, 최저 기온: " + (int)min;
+            String msg = "평균 기온: " + (int)avg + "도, 최고 기온: " + (int)max + "도, 최저 기온: " + (int)min + "도 입니다.";
             WeatherActivity.myTTS.speak(msg, TextToSpeech.QUEUE_FLUSH, null);
 
             Log.i ("avg", Double.toString(avg));

@@ -1,5 +1,5 @@
 <ListView
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/WeatherListView"
+    android:id="@+id/BusListView"
     android:layout_width="368dp"
     android:layout_height="800dp"/>
