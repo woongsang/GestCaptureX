@@ -50,6 +50,8 @@
         <!-- TrafficInfoActivity -->
         <activity android:name=".Activity.TrafficInfoActivity"     />
 
+        <!-- BusActivity -->
+        <activity android:name=".Activity.BusActivity"     />
         <service android:name="com.perples.recosdk.RECOBeaconService" />
     </application>
 
