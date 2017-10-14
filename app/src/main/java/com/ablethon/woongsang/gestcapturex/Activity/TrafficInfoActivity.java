@@ -18,6 +18,7 @@ import android.widget.ListView;
 import com.ablethon.woongsang.gestcapturex.API.CommonLibrary;
 import com.ablethon.woongsang.gestcapturex.API.TouchInterface;
 import com.ablethon.woongsang.gestcapturex.ProcessGesture.ProcessCallGesture;
+import com.ablethon.woongsang.gestcapturex.ProcessGesture.ProcessTrafficInfoGesture;
 import com.ablethon.woongsang.gestcapturex.R;
 
 import java.util.ArrayList;
@@ -64,7 +65,7 @@ public class TrafficInfoActivity extends Activity implements TextToSpeech.OnInit
     AdapterView.OnTouchListener scrollChecker = new  AdapterView.OnTouchListener() {
 
 
-        ProcessCallGesture pg= new ProcessCallGesture();                               //to prcessing gesture
+        ProcessTrafficInfoGesture pg= new ProcessTrafficInfoGesture();                               //to prcessing gesture
         TouchInterface TI = new TouchInterface((Activity) context,context,pg);       //to prcessing gesture
 
         @RequiresApi(api = Build.VERSION_CODES.M)
