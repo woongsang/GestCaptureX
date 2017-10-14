@@ -21,7 +21,7 @@ public class CommonLibrary {
     public static ArrayList<Article> ARTICLE_LIST = new ArrayList<Article>();
     public static String DEPARTURE;
     public static String DESTINATION;
-    public static String MY_IP="http://192.168.1.5:8088";
+    public static String MY_IP="http://192.168.51.51:8088";
 
     public static void insertArticle(String title,String description){
         ARTICLE_LIST.add(new Article(title,description));
