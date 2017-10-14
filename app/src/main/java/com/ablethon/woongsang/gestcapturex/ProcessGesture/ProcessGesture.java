@@ -11,6 +11,7 @@ import com.ablethon.woongsang.gestcapturex.Activity.DepartureActivity;
 
 import com.ablethon.woongsang.gestcapturex.Activity.MainActivity;
 import com.ablethon.woongsang.gestcapturex.Activity.NewsActivity;
+import com.ablethon.woongsang.gestcapturex.Activity.RoadAnounceActivity;
 import com.ablethon.woongsang.gestcapturex.VO.Location;
 import com.ablethon.woongsang.gestcapturex.VO.Vertex;
 import com.ablethon.woongsang.gestcapturex.Activity.WeatherActivity;
@@ -67,6 +68,9 @@ public class ProcessGesture  extends Activity{
             else if (list.get(0).getSection() == 2 && list.get(1).getSection() == 4 ){
                 Log.i("tttt","ㄴ좌우반대입니다....");
                 activity.startActivity(new Intent(context, DepartureActivity.class));
+            }else if (list.get(0).getSection() == 6 && list.get(1).getSection() == 4 ){
+                Log.i("tttt","ㄱ역순입니다....");
+                activity.startActivity(new Intent(context, RoadAnounceActivity.class));
             }
         }
     }

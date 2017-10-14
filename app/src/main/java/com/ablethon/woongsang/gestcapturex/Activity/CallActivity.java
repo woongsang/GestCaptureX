@@ -59,7 +59,7 @@ public class CallActivity extends Activity implements OnInitListener{
         listview= (ListView) findViewById(R.id.CallListView);
         listview.setAdapter(adapter);
 
-        listview.setOnTouchListener(scrollChecker);
+//        listview.setOnTouchListener(scrollChecker);
 
     }
 
@@ -135,6 +135,7 @@ public class CallActivity extends Activity implements OnInitListener{
             Log.d(TAG, "TTS Destroyed");
         }
         finish();
+
 
     }
 }
