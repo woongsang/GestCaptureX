@@ -22,12 +22,7 @@ import com.ablethon.woongsang.gestcapturex.API.TouchInterface;
 import com.ablethon.woongsang.gestcapturex.ProcessGesture.ProcessCallGesture;
 import com.ablethon.woongsang.gestcapturex.ProcessGesture.ProcessRoadAnounceGesture;
 import com.ablethon.woongsang.gestcapturex.R;
-import com.perples.recosdk.RECOBeacon;
-import com.perples.recosdk.RECOBeaconManager;
-import com.perples.recosdk.RECOBeaconRegion;
-import com.perples.recosdk.RECOErrorCode;
-import com.perples.recosdk.RECORangingListener;
-import com.perples.recosdk.RECOServiceConnectListener;
+
 
 import java.util.ArrayList;
 import java.util.Collection;
