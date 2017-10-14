@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.speech.tts.TextToSpeech;
 
 import com.ablethon.woongsang.gestcapturex.API.PatternViewer;
+import com.ablethon.woongsang.gestcapturex.R;
 
 public class MainActivity extends Activity implements TextToSpeech.OnInitListener {
     PatternViewer patternViewer;
@@ -15,6 +16,7 @@ public class MainActivity extends Activity implements TextToSpeech.OnInitListene
         myTTS = new TextToSpeech(this, this);
 
         patternViewer = new PatternViewer(this);
+        patternViewer.setBackground(getResources().getDrawable(R.drawable.mainbg));
         setContentView(patternViewer);
     }
 
