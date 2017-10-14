@@ -1,10 +1,8 @@
 package com.ablethon.woongsang.gestcapturex.ProcessGesture;
 
-import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Build;
 import android.speech.tts.TextToSpeech;
@@ -26,7 +24,7 @@ public class ProcessCallGesture extends ProcessGesture {
     String name = "";
 
     @RequiresApi(api = Build.VERSION_CODES.M)
-    public void process(ArrayList<Vertex> detectedPattern, Activity activity, Context context) {
+    public void process(ArrayList<Vertex> detectedPattern, Activity activity, Context context, boolean isCircle) {
 
 
         if (detectedPattern.size() == 1) {

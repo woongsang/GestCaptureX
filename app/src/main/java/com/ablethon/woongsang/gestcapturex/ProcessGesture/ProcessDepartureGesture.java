@@ -3,7 +3,6 @@ package com.ablethon.woongsang.gestcapturex.ProcessGesture;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Build;
 import android.speech.tts.TextToSpeech;
 import android.support.annotation.RequiresApi;
@@ -11,9 +10,7 @@ import android.util.Log;
 import android.widget.Toast;
 
 import com.ablethon.woongsang.gestcapturex.API.CommonLibrary;
-
 import com.ablethon.woongsang.gestcapturex.Activity.DepartureActivity;
-
 import com.ablethon.woongsang.gestcapturex.Activity.DestinationActivity;
 import com.ablethon.woongsang.gestcapturex.VO.Vertex;
 
@@ -27,7 +24,7 @@ public class ProcessDepartureGesture extends ProcessGesture {
     String departure = "";
 
     @RequiresApi(api = Build.VERSION_CODES.M)
-    public void process(ArrayList<Vertex> detectedPattern, Activity activity, Context context) {
+    public void process(ArrayList<Vertex> detectedPattern, Activity activity, Context context, boolean isCircle) {
 
 
         if (detectedPattern.size() == 1) {

@@ -3,14 +3,10 @@ package com.ablethon.woongsang.gestcapturex.ProcessGesture;
 import android.app.Activity;
 import android.content.Context;
 import android.os.Build;
-import android.speech.tts.TextToSpeech;
 import android.support.annotation.RequiresApi;
 import android.util.Log;
-import android.widget.Toast;
 
-import com.ablethon.woongsang.gestcapturex.API.CommonLibrary;
 import com.ablethon.woongsang.gestcapturex.Activity.NewsActivity;
-import com.ablethon.woongsang.gestcapturex.Activity.RoadAnounceActivity;
 import com.ablethon.woongsang.gestcapturex.VO.Vertex;
 
 import java.util.ArrayList;
@@ -22,7 +18,7 @@ import java.util.ArrayList;
 public class ProcessRoadAnounceGesture extends ProcessGesture {
     String title= "";
     @RequiresApi(api = Build.VERSION_CODES.M)
-    public void process(ArrayList<Vertex> detectedPattern, Activity activity, Context context) {
+    public void process(ArrayList<Vertex> detectedPattern, Activity activity, Context context, boolean isCircle) {
 
 
 

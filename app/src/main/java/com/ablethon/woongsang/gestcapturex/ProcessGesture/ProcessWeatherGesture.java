@@ -27,7 +27,7 @@ public class ProcessWeatherGesture extends ProcessGesture {
 
     @RequiresApi(api = Build.VERSION_CODES.M)
 
-    public void process(ArrayList<Vertex> detectedPattern, Activity activity, Context context) throws IOException {
+    public void process(ArrayList<Vertex> detectedPattern, Activity activity, Context context, boolean isCircle) throws IOException {
         if (ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             requestPermissions (new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
 

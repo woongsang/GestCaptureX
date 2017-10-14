@@ -2,7 +2,6 @@ package com.ablethon.woongsang.gestcapturex.ProcessGesture;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
 import android.os.Build;
 import android.speech.tts.TextToSpeech;
 import android.support.annotation.RequiresApi;
@@ -10,21 +9,15 @@ import android.util.Log;
 import android.widget.Toast;
 
 import com.ablethon.woongsang.gestcapturex.API.CommonLibrary;
-import com.ablethon.woongsang.gestcapturex.Activity.DepartureActivity;
 import com.ablethon.woongsang.gestcapturex.Activity.DestinationActivity;
 import com.ablethon.woongsang.gestcapturex.VO.Vertex;
 
-import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
-import java.net.URI;
-import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.ArrayList;
-
-import static android.content.ContentValues.TAG;
 
 /**
  * Created by SangHeon on 2017-10-13.
@@ -34,7 +27,7 @@ public class ProcessDestinationGesture  extends ProcessGesture {
     String departure = "";
 
     @RequiresApi(api = Build.VERSION_CODES.M)
-    public void process(ArrayList<Vertex> detectedPattern, Activity activity, Context context) {
+    public void process(ArrayList<Vertex> detectedPattern, Activity activity, Context context, boolean isCircle) {
 
 
         if (detectedPattern.size() == 1) {

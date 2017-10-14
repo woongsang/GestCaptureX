@@ -9,7 +9,6 @@ import android.util.Log;
 import android.widget.Toast;
 
 import com.ablethon.woongsang.gestcapturex.API.CommonLibrary;
-import com.ablethon.woongsang.gestcapturex.Activity.CallActivity;
 import com.ablethon.woongsang.gestcapturex.Activity.NewsActivity;
 import com.ablethon.woongsang.gestcapturex.VO.Vertex;
 
@@ -22,7 +21,7 @@ import java.util.ArrayList;
 public class ProcessNewsGesture extends ProcessGesture {
     String title= "";
     @RequiresApi(api = Build.VERSION_CODES.M)
-    public void process(ArrayList<Vertex> detectedPattern, Activity activity, Context context) {
+    public void process(ArrayList<Vertex> detectedPattern, Activity activity, Context context, boolean isCircle) {
 
 
 
