@@ -27,7 +27,8 @@ public class CommonLibrary {
 
     public static String DEPARTURE;
     public static String DESTINATION;
-    public static String MY_IP="http://192.168.51.51:8088";
+    //172.31.98.128
+    public static String MY_IP="http://172.31.98.128:8088";
     public static String preLoc="" ;
     public static String curLoc="";
     public static int preMeter=500;

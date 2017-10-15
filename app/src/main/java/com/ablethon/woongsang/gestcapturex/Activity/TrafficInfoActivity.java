@@ -115,10 +115,10 @@ public class TrafficInfoActivity extends Activity implements TextToSpeech.OnInit
     }
 
     public void onInit(int status) {
-        String myText1 = "위 아래로 드래그하여 전화할 사람을 선택해주세요";
-        String myText2 = "선택 후 전화하려면 좌에서 우로 드래그 해주세요";
+        String myText1 = "이용하실 옵션을 선택해주세요";
+ //       String myText2 = "선택 후 전화하려면 좌에서 우로 드래그 해주세요";
         myTTS.speak(myText1, TextToSpeech.QUEUE_FLUSH, null);
-        myTTS.speak(myText2, TextToSpeech.QUEUE_ADD, null);
+   //     myTTS.speak(myText2, TextToSpeech.QUEUE_ADD, null);
     }
 
     @Override

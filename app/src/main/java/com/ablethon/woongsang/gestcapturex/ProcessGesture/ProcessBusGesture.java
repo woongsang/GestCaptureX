@@ -45,12 +45,12 @@ public class ProcessBusGesture extends ProcessGesture {
         if (detectedPattern.size() == 1) {
             if (detectedPattern.get(0).getSection() == 2) { //위->아래로 스크롤
                 selected_option = BusActivity.getNextOption(1);
-                BusActivity.myTTS.speak(city_name + " " + selected_option, TextToSpeech.QUEUE_FLUSH, null);
-                Toast.makeText(context, city_name + " " + selected_option, Toast.LENGTH_LONG).show();
+                BusActivity.myTTS.speak(selected_option, TextToSpeech.QUEUE_FLUSH, null);
+                Toast.makeText(context, selected_option, Toast.LENGTH_LONG).show();
             } else if (detectedPattern.get(0).getSection() == 6) {   //아래->위로 스크롤
                 selected_option = BusActivity.getNextOption(2);
-                BusActivity.myTTS.speak(city_name + " " + selected_option, TextToSpeech.QUEUE_FLUSH, null);
-                Toast.makeText(context, city_name + " " + selected_option, Toast.LENGTH_LONG).show();
+                BusActivity.myTTS.speak( selected_option, TextToSpeech.QUEUE_FLUSH, null);
+                Toast.makeText(context,selected_option, Toast.LENGTH_LONG).show();
             } else if (detectedPattern.get(0).getSection() == 0 || detectedPattern.get(0).getSection() == 4) {       //좌->우로 스크롤
                 if (BusActivity.selector < 0) {
 

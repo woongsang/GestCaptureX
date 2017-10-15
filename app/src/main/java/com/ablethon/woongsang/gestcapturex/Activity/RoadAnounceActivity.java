@@ -125,26 +125,26 @@ public class RoadAnounceActivity extends Activity implements TextToSpeech.OnInit
 
         myTTS.speak(myText1, TextToSpeech.QUEUE_FLUSH, null);
         try {
-            Thread.sleep(5000);
+            Thread.sleep(3000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
 
-        myTTS.speak("현재위치는 화장실 앞 입니다. 엘레베이터 20m전 입니다.", TextToSpeech.QUEUE_FLUSH, null);
+        myTTS.speak("현재위치는 화장실 앞 입니다. 엘레베이터 30m 전 입니다.", TextToSpeech.QUEUE_FLUSH, null);
         try {
-            Thread.sleep(5000);
+            Thread.sleep(10000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
 
-        myTTS.speak("현재위치는 화장실 앞 입니다. 엘레베이터 12m전 입니다.", TextToSpeech.QUEUE_FLUSH, null);
+        myTTS.speak("화장실 15m 전 입니다. 엘레베이터 12m 전 입니다.", TextToSpeech.QUEUE_FLUSH, null);
 
         try {
-            Thread.sleep(5000);
+            Thread.sleep(10000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        myTTS.speak("현재위치는 엘레베이터 앞 입니다. 강당 20m전 입니다.", TextToSpeech.QUEUE_FLUSH, null);
+        myTTS.speak("현재위치는 엘레베이터 앞 입니다. 강당 30m 전 입니다.", TextToSpeech.QUEUE_FLUSH, null);
 
 
 
